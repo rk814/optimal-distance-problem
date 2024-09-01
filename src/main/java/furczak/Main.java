@@ -1,6 +1,6 @@
 package furczak;
 
-import furczak.bruteforce.BruteForceRecurrencyEtapSolution;
+import furczak.bruteforce.BruteForceRecurrentEtapSolution;
 import furczak.generators.RoutePointsGenerator;
 
 public class Main {
@@ -8,9 +8,9 @@ public class Main {
 
         RoutePointsGenerator generator = new RoutePointsGenerator();
 
-        BruteForceRecurrencyEtapSolution bruteForce = new BruteForceRecurrencyEtapSolution(generator.getSampleRoutePoints());
+        BruteForceRecurrentEtapSolution bruteForce = new BruteForceRecurrentEtapSolution(generator.getSampleRoutePoints());
         System.out.println(bruteForce.getRoutePoints());
-        BruteForceRecurrencyEtapSolution bruteForce2 = new BruteForceRecurrencyEtapSolution(generator.generateRandomRoutePoints(1000, 10000));
+        BruteForceRecurrentEtapSolution bruteForce2 = new BruteForceRecurrentEtapSolution(generator.generateRandomRoutePoints(1000, 10000));
         System.out.println(bruteForce2.getRoutePoints());
 
         System.out.println(bruteForce.calculateRoutes());

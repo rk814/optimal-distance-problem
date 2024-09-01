@@ -7,17 +7,17 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @Getter
-public class BruteForceRecurrencyEtapSolution {
+public class BruteForceRecurrentEtapSolution {
     private int minDistance = 30;
     private int maxDistance = 50;
 
     private final List<Integer> routePoints;
 
-    public BruteForceRecurrencyEtapSolution(List<Integer> routePoints) {
+    public BruteForceRecurrentEtapSolution(List<Integer> routePoints) {
         this.routePoints = routePoints;
     }
 
-    public BruteForceRecurrencyEtapSolution(int minDistance, int maxDistance, List<Integer> routePoints) {
+    public BruteForceRecurrentEtapSolution(int minDistance, int maxDistance, List<Integer> routePoints) {
         this.minDistance = minDistance;
         this.maxDistance = maxDistance;
         this.routePoints = routePoints;
@@ -33,16 +33,14 @@ public class BruteForceRecurrencyEtapSolution {
 
         routes.forEach(r -> {
             int lastPoint = r.get(r.size() - 1);
-            List<List<Integer>> updatedList = routePoints.stream()
-                    .filter(p -> p > lastPoint + minDistance && p < lastPoint + maxDistance)
-                    .map(p -> Stream.concat(r.stream(), Stream.of(p)).toList())
-                    .toList();
 
-            if (updatedList.isEmpty()) {
-                if (lastPoint == routePoints.get(routePoints.size() - 1)) {
-                    result.add(r);
-                }
+            if (lastPoint == routePoints.get(routePoints.size() - 1)) {
+                result.add(r);
             } else {
+                List<List<Integer>> updatedList = routePoints.stream()
+                        .filter(p -> p >= lastPoint + minDistance && p <= lastPoint + maxDistance)
+                        .map(p -> Stream.concat(r.stream(), Stream.of(p)).toList())
+                        .toList();
                 result.addAll(calculateRoutes(updatedList));
             }
         });

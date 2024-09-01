@@ -1,4 +1,6 @@
-package furczak.bruteforce;
+package furczak.calculators.bruteforce;
+
+import furczak.calculators.RouteCalculate;
 
 import java.util.List;
 

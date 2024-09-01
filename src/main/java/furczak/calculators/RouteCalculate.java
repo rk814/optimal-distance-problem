@@ -1,4 +1,4 @@
-package furczak.bruteforce;
+package furczak.calculators;
 
 import java.util.List;
 

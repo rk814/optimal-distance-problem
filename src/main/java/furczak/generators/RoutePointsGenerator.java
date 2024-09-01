@@ -12,7 +12,7 @@ public class RoutePointsGenerator {
     private final Random random = new Random();
 
     public List<Integer> getSampleRoutePoints() {
-        return List.of(0, 12, 23, 35, 42, 51, 66, 70,85, 100);
+        return List.of(0, 43, 59, 64, 77, 90, 110, 115,124, 142, 161, 183);
     }
 
     public List<Integer> generateRandomRoutePoints(int numberOfPoints, int endPoint) {

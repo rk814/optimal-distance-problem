@@ -1,5 +1,6 @@
-package furczak.bruteforce;
+package furczak.calculators.bruteforce;
 
+import furczak.calculators.RouteCalculate;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 

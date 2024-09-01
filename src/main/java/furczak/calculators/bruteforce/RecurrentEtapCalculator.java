@@ -58,7 +58,6 @@ public class RecurrentEtapCalculator implements RouteCalculate {
 
     public List<Integer> getBestSequence(List<List<Integer>> sequences) {
         List<Double> sequencesDeviation = sequences.stream().map(this::getStandardDeviation).toList();
-        // TODO improve comparator
         double bestSequenceDeviation = sequencesDeviation.stream().min(Double::compareTo)
                 .orElseThrow(() -> new NoSuchElementException("Empty sequences list"));
         return sequences.get(sequencesDeviation.indexOf(bestSequenceDeviation));

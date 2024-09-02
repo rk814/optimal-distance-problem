@@ -58,6 +58,15 @@ public class RouteVariants implements BestRouteFinder {
 
     @Override
     public String toString() {
-        return routes.toString(); // ??? better
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Route contains ").append(routes.size()).append(" variants, distance between [").append(minDistance)
+                .append(", ").append(maxDistance).append("], calculated with ").append(routeCalculator);
+
+        for (int i = 0; i < routes.size(); i++) {
+            sb.append(i + 1).append(". ").append(routes.get(i).toString()).append("\n");
+        }
+
+        return sb.toString();
     }
 }

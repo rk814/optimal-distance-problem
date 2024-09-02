@@ -13,7 +13,7 @@ public class Main {
         RoutePointsGenerator generator = new RoutePointsGenerator();
 
 
-        List<Integer> simpleAvailablePoints = generator.getSampleRoutePoints();
+        List<Integer> simpleAvailablePoints = generator.getSampleRoutePoints(1);
         System.out.printf("Points list: %s%n", simpleAvailablePoints);
 
         RouteVariants simpleRouteVariants = new RouteVariants(new RecurrentRoutesCalculator(), 22, 48);

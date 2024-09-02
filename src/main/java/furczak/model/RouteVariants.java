@@ -2,7 +2,6 @@ package furczak.model;
 
 import furczak.calculators.RouteCalculator;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -16,7 +15,6 @@ public class RouteVariants implements BestRouteFinder {
     private int minDistance = 30;
     private int maxDistance = 50;
 
-    @Setter
     private List<Integer> availablePoints;
     private List<Route> routes;
 
@@ -31,9 +29,14 @@ public class RouteVariants implements BestRouteFinder {
         this.maxDistance = maxDistance;
     }
 
+
+    @Override
     public void calculate() {
+        if (availablePoints==null) {
+            throw new NullPointerException("Set up available route points first");
+        }
         List<List<Integer>> routes = routeCalculator.calculateRoutes(availablePoints, minDistance, maxDistance);
-        this.routes = routes.stream().map(route -> new Route(route, minDistance, maxDistance)).sorted().collect(Collectors.toList());
+        this.routes = routes.stream().map(route -> new Route(route, getPerfectDistance())).sorted().collect(Collectors.toList());
     }
 
     @Override
@@ -44,11 +47,6 @@ public class RouteVariants implements BestRouteFinder {
         return routes.get(sequencesDeviation.indexOf(bestSequenceDeviation));
     }
 
-    public void setDistances(int minDistance, int maxDistance) {
-        this.minDistance = minDistance;
-        this.maxDistance = maxDistance;
-    }
-
     public List<Route> getRoutes() {
         if (routes == null) {
             throw new NullPointerException("First calculate routes with calculateRouteVariants method");
@@ -56,17 +54,38 @@ public class RouteVariants implements BestRouteFinder {
         return routes;
     }
 
+    public void setDistances(int minDistance, int maxDistance) {
+        this.minDistance = minDistance;
+        this.maxDistance = maxDistance;
+        this.routes = null;
+    }
+
+    public void setAvailablePoints(List<Integer> availablePoints) {
+        this.availablePoints = availablePoints;
+        this.routes = null;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Route contains ").append(routes.size()).append(" variants, distance between [").append(minDistance)
-                .append(", ").append(maxDistance).append("], calculated with ").append(routeCalculator);
+        sb.append("Route contains ").append(routes.size()).append(" variant(s), the distance is set up between ").append(minDistance)
+                .append(" and ").append(maxDistance).append(", the average perfect distance is ").append(getPerfectDistance())
+                .append(", calculated with ").append(getSimpleCalculatorName()).append("\n");
 
         for (int i = 0; i < routes.size(); i++) {
             sb.append(i + 1).append(". ").append(routes.get(i).toString()).append("\n");
         }
 
         return sb.toString();
+    }
+
+    private String getSimpleCalculatorName() {
+        String[] split = routeCalculator.getClass().toString().split("\\.");
+        return split[split.length-1];
+    }
+
+    private int getPerfectDistance() {
+        return (minDistance + maxDistance) / 2;
     }
 }

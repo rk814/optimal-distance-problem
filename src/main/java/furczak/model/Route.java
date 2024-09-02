@@ -9,9 +9,6 @@ import java.util.stream.IntStream;
 
 @Slf4j
 public class Route implements Comparable<Route> {
-    private final int minDistance;
-    private final int maxDistance;
-
     @Getter
     private final List<Integer> route;
 
@@ -21,12 +18,10 @@ public class Route implements Comparable<Route> {
     private final double standardDeviation;
 
 
-    public Route(List<Integer> route, int minDistance, int maxDistance) {
-        this.minDistance = minDistance;
-        this.maxDistance = maxDistance;
+    public Route(List<Integer> route, int perfectDistance) {
         this.route = route;
         this.routeDistances = calculateRouteDistances();
-        this.standardDeviation = calculateStandardDeviation();
+        this.standardDeviation = calculateStandardDeviation(perfectDistance);
     }
 
 
@@ -43,16 +38,17 @@ public class Route implements Comparable<Route> {
         return Double.compare(this.standardDeviation, route.getStandardDeviation());
     }
 
-    private int getPerfectDistance() {
-        return (minDistance + maxDistance) / 2;
+    private List<Integer> calculateRouteDistances() {
+        return IntStream.range(1, route.size())
+                .mapToObj(index -> route.get(index) - route.get(index - 1))
+                .toList();
     }
 
-    private double calculateStandardDeviation() {
+    private double calculateStandardDeviation(int perfectDistance) {
         log.trace("Started calculateStandardDeviation method...");
         log.debug("Etap distances: {}", routeDistances);
         int etapCount = routeDistances.size();
         log.debug("Etap count: {}", etapCount);
-        int perfectDistance = getPerfectDistance();
         log.debug("Perfect distance: {}", perfectDistance);
 
         double sumOfSquaredDifferences = routeDistances.stream()
@@ -65,11 +61,5 @@ public class Route implements Comparable<Route> {
         double standardDeviation = Math.pow(sumOfSquaredDifferences / etapCount, 0.5);
         log.info("Standard deviation of sequence: {} is {}", route, standardDeviation);
         return standardDeviation;
-    }
-
-    private List<Integer> calculateRouteDistances() {
-        return IntStream.range(1, route.size())
-                .mapToObj(index -> route.get(index) - route.get(index - 1))
-                .toList();
     }
 }

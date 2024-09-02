@@ -1,6 +1,5 @@
 package furczak;
 
-import furczak.calculators.RouteCalculator;
 import furczak.calculators.bruteforce.RecurrentRoutesCalculator;
 import furczak.generators.RoutePointsGenerator;
 import furczak.model.Route;
@@ -17,7 +16,7 @@ public class Main {
         List<Integer> simpleAvailablePoints = generator.getSampleRoutePoints();
         System.out.printf("Points list: %s%n", simpleAvailablePoints);
 
-        RouteVariants simpleRouteVariants = new RouteVariants(new RecurrentRoutesCalculator());
+        RouteVariants simpleRouteVariants = new RouteVariants(new RecurrentRoutesCalculator(), 22, 48);
         simpleRouteVariants.setAvailablePoints(simpleAvailablePoints);
         simpleRouteVariants.calculate();
 

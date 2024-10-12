@@ -35,8 +35,7 @@ public class RouteVariants implements BestRouteFinder {
         if (availablePoints==null) {
             throw new NullPointerException("Set up available route points first");
         }
-        List<List<Integer>> routes = routeCalculator.calculateRoutes(availablePoints, minDistance, maxDistance);
-        this.routes = routes.stream().map(route -> new Route(route, getPerfectDistance())).sorted().collect(Collectors.toList());
+        this.routes = routeCalculator.calculateRoutes(availablePoints, minDistance, maxDistance);
     }
 
     @Override

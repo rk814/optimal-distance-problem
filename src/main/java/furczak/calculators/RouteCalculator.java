@@ -1,7 +1,9 @@
 package furczak.calculators;
 
+import furczak.model.Route;
+
 import java.util.List;
 
 public interface RouteCalculator {
-    List<List<Integer>> calculateRoutes(List<Integer> availablePoints, int minDist, int maxDist);
+    List<Route> calculateRoutes(List<Integer> availablePoints, int minDist, int maxDist);
 }

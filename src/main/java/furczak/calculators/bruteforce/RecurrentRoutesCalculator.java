@@ -1,6 +1,7 @@
 package furczak.calculators.bruteforce;
 
 import furczak.calculators.RouteCalculator;
+import furczak.model.Route;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,23 +21,25 @@ public class RecurrentRoutesCalculator implements RouteCalculator {
      * @param maxDist required maximum distance between next points
      * @return list with lists of integer points representing calculated routes
      */
-    public List<List<Integer>> calculateRoutes(List<Integer> availablePoints, int minDist, int maxDist) {
-        List<Integer> innerList = List.of(0);
-        return calculateRoutesWithRecurrence(new ArrayList<>(List.of(innerList)), availablePoints, minDist, maxDist);
+    public List<Route> calculateRoutes(List<Integer> availablePoints, int minDist, int maxDist) {
+        List<Route> innerList = new ArrayList<>();
+        innerList.add(new Route(List.of(0), minDist, maxDist));
+        return calculateRoutesWithRecurrence(innerList, availablePoints, minDist, maxDist);
     }
 
-    private List<List<Integer>> calculateRoutesWithRecurrence(List<List<Integer>> routes, List<Integer> availablePoints, int minDist, int maxDist) {
-        List<List<Integer>> result = new ArrayList<>();
+    private List<Route> calculateRoutesWithRecurrence(List<Route> routes, List<Integer> availablePoints, int minDist, int maxDist) {
+        List<Route> result = new ArrayList<>();
 
         routes.forEach(route -> {
-            int lastRoutePoint = route.get(route.size() - 1);
+            int lastRoutePoint = route.getLastRoutePoint();
 
             if (isRouteAtTheEndPoint(availablePoints, lastRoutePoint)) {
                 result.add(route);
             } else {
-                List<List<Integer>> updatedList = availablePoints.stream()
+                List<Route> updatedList = availablePoints.stream()
                         .filter(point -> point >= lastRoutePoint + minDist && point <= lastRoutePoint + maxDist)
-                        .map(point -> Stream.concat(route.stream(), Stream.of(point)).toList())
+                        .map(point -> Stream.concat(route.getRoute().stream(), Stream.of(point)).toList())
+                        .map(list-> new Route(list, minDist, maxDist))
                         .toList();
                 result.addAll(calculateRoutesWithRecurrence(updatedList, availablePoints, minDist, maxDist));
             }
@@ -45,7 +48,7 @@ public class RecurrentRoutesCalculator implements RouteCalculator {
         return result;
     }
 
-    private boolean isRouteAtTheEndPoint(List<Integer> availablePoints, int lastPoint) {
+    public boolean isRouteAtTheEndPoint(List<Integer> availablePoints, int lastPoint) {
         return lastPoint == availablePoints.get(availablePoints.size() - 1);
     }
 }

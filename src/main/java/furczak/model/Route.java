@@ -18,12 +18,16 @@ public class Route implements Comparable<Route> {
     private final double standardDeviation;
 
 
-    public Route(List<Integer> route, int perfectDistance) {
+    public Route(List<Integer> route, int minDist, int maxDist) {
         this.route = route;
         this.routeDistances = calculateRouteDistances();
-        this.standardDeviation = calculateStandardDeviation(perfectDistance);
+        this.standardDeviation = calculateStandardDeviation(minDist, maxDist);
     }
 
+
+    public Integer getLastRoutePoint() {
+        return route.get(route.size()-1);
+    }
 
     @Override
     public String toString() {
@@ -38,21 +42,22 @@ public class Route implements Comparable<Route> {
         return Double.compare(this.standardDeviation, route.getStandardDeviation());
     }
 
+
     private List<Integer> calculateRouteDistances() {
         return IntStream.range(1, route.size())
                 .mapToObj(index -> route.get(index) - route.get(index - 1))
                 .toList();
     }
 
-    private double calculateStandardDeviation(int perfectDistance) {
+    private double calculateStandardDeviation(int minDist, int maxDist) {
         log.trace("Started calculateStandardDeviation method...");
         log.debug("Etap distances: {}", routeDistances);
         int etapCount = routeDistances.size();
         log.debug("Etap count: {}", etapCount);
-        log.debug("Perfect distance: {}", perfectDistance);
+        log.debug("Perfect distance: {}", getPerfectDistance(minDist, maxDist));
 
         double sumOfSquaredDifferences = routeDistances.stream()
-                .mapToDouble(d -> d - perfectDistance)
+                .mapToDouble(d -> d - getPerfectDistance(minDist, maxDist))
                 .map(d -> d * d)
                 .reduce(Double::sum).orElseThrow(() ->
                         new NoSuchElementException("Empty sequences list"));
@@ -61,5 +66,9 @@ public class Route implements Comparable<Route> {
         double standardDeviation = Math.pow(sumOfSquaredDifferences / etapCount, 0.5);
         log.info("Standard deviation of sequence: {} is {}", route, standardDeviation);
         return standardDeviation;
+    }
+
+    private int getPerfectDistance(int minDist, int maxDist) {
+        return (minDist + maxDist) / 2;
     }
 }

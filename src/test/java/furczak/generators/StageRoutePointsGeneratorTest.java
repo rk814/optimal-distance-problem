@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 
-class RoutePointsGeneratorTest {
+class StageRoutePointsGeneratorTest {
 
     private final RoutePointsGenerator generator = new RoutePointsGenerator();
 

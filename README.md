@@ -5,7 +5,7 @@ Actually, the path of the trip wasn't the real issue; I knew where I wanted to g
 The problem started when I tried to divide it into daily stages.
 
 
-My assumption was that each day should cover a distance between 30 to 50 km, and there were certain places along the route where I could stay overnight.
+My assumption was that each day should cover a distance between 30 to 50 km, and there were certain places along the stageRoute where I could stay overnight.
 ### Day one
 I started from point A and explored every possible option.
 Let's say there were 3 accommodation options at 30 km, 40 km, and 50 km (keeping it simple for this example).

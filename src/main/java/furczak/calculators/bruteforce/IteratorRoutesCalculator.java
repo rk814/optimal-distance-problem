@@ -1,6 +1,9 @@
 package furczak.calculators.bruteforce;
 
 import furczak.calculators.RouteCalculator;
+import furczak.model.StageRoute;
+import furczak.model.RouteVariants;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -15,9 +18,12 @@ import java.util.List;
  * - każda iteracja to nowa lista
  * - jesli ogległość jest za duża to remove
  */
+@Setter
 public class IteratorRoutesCalculator implements RouteCalculator {
+    private RouteVariants routeVariants;
+
     @Override
-    public List<List<Integer>> calculateRoutes(List<Integer> availablePoints, int minDist, int maxDist) {
+    public List<StageRoute> calculateRoutes() {
         return null;
     }
 }

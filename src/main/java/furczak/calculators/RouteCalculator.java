@@ -1,9 +1,12 @@
 package furczak.calculators;
 
-import furczak.model.Route;
+import furczak.model.StageRoute;
+import furczak.model.RouteVariants;
 
 import java.util.List;
 
 public interface RouteCalculator {
-    List<Route> calculateRoutes(List<Integer> availablePoints, int minDist, int maxDist);
+    List<StageRoute> calculateRoutes();
+
+    void setRouteVariants(RouteVariants routeVariants);
 }

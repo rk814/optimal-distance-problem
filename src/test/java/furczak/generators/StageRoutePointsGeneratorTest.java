@@ -2,7 +2,6 @@ package furczak.generators;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.InstanceOfAssertFactories;
-import org.assertj.core.api.InstanceOfAssertFactory;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

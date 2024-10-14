@@ -1,5 +1,6 @@
 package furczak.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -8,6 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.stream.IntStream;
 
 @Slf4j
+@EqualsAndHashCode
 public class StageRoute implements Comparable<StageRoute> {
     @Getter
     private final List<Integer> route;

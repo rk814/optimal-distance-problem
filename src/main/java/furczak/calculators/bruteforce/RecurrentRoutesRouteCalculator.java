@@ -47,6 +47,10 @@ public class RecurrentRoutesRouteCalculator extends RouteCalculator {
                         .map(point -> Stream.concat(route.getRoute().stream(), Stream.of(point)).toList())
                         .map(list -> new StageRoute(list, routeVariants))
                         .toList();
+
+                if (updatedList.isEmpty()) {
+                    log.info("Route: {} could not be completed", route.getRoute());
+                }
                 result.addAll(calculateRoutesWithRecurrence(updatedList));
             }
         });

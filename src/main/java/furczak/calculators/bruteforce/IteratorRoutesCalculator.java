@@ -19,7 +19,7 @@ import java.util.List;
  * - jesli ogległość jest za duża to remove
  */
 @Setter
-public class IteratorRoutesCalculator implements RouteCalculator {
+public class IteratorRoutesCalculator extends RouteCalculator {
     private RouteVariants routeVariants;
 
     @Override

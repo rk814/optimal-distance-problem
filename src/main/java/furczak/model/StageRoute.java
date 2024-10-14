@@ -71,7 +71,7 @@ public class StageRoute implements Comparable<StageRoute> {
     private double calculateStandardDeviation() {
         log.trace("Started calculateStandardDeviation method...");
         int etapCount = routeDistances.size();
-        int perfectDistance = routeVariants.getDivisionSetup().getPerfectDistance();
+        int perfectDistance = routeVariants.getDivisionBoundaries().getPerfectDistance();
 
         double sumOfSquaredDifferences = routeDistances.stream()
                 .mapToDouble(d -> d - perfectDistance)

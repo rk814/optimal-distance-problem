@@ -2,32 +2,31 @@ package furczak.calculators.bruteforce;
 
 import furczak.calculators.RouteCalculator;
 import furczak.model.StageRoute;
-import furczak.model.RouteVariants;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
 @Setter
+@Slf4j
 @NoArgsConstructor
-public class RecurrentRoutesCalculator implements RouteCalculator {
-
-    private RouteVariants routeVariants;
-
+public class RecurrentRoutesRouteCalculator extends RouteCalculator {
 
     /**
      * Calculates routes with recurrent method.
      * <p>
-     * Calculations are initialised with list of stage routes with one start stage route containing one point of 0 integer value.
+     * Calculations are initialised with list of stage routes with one start stage route containing a point of 0 integer value.
      * This list is updated during each pass of the method and returned as the final result.
-     * The initialization and recursive logic are handled by the private method `calculateRoutesWithRecurrence()`.
+     * The recursive logic is handled by the private method `calculateRoutesWithRecurrence()`.
      * </p>
      * @return list with stage routes
      */
+    @Override
     public List<StageRoute> calculateRoutes() {
+        log.trace("Started calculateRoutes() method...");
         List<StageRoute> startStageRouteList = new ArrayList<>();
         startStageRouteList.add(new StageRoute(List.of(0), routeVariants));
         return calculateRoutesWithRecurrence(startStageRouteList);
@@ -43,8 +42,8 @@ public class RecurrentRoutesCalculator implements RouteCalculator {
                 result.add(route);
             } else {
                 List<StageRoute> updatedList = routeVariants.getAvailablePoints().stream()
-                        .filter(point -> point >= lastRoutePoint + routeVariants.getDivisionSetup().getMinDistance()
-                                && point <= lastRoutePoint + routeVariants.getDivisionSetup().getMaxDistance())
+                        .filter(point -> point >= lastRoutePoint + routeVariants.getDivisionBoundaries().getMin()
+                                && point <= lastRoutePoint + routeVariants.getDivisionBoundaries().getMax())
                         .map(point -> Stream.concat(route.getRoute().stream(), Stream.of(point)).toList())
                         .map(list -> new StageRoute(list, routeVariants))
                         .toList();

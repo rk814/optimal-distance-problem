@@ -5,12 +5,12 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class DivisionSetup {
+public class DivisionDistance {
 
-    private int minDistance = 30;
-    private int maxDistance = 50;
+    private int min = 30;
+    private int max = 50;
 
     int getPerfectDistance() {
-        return (minDistance + maxDistance) / 2;
+        return (min + max) / 2;
     }
 }

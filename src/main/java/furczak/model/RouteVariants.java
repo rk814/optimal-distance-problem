@@ -13,7 +13,7 @@ public class RouteVariants implements BestRouteFinder {
 
     private final RouteCalculator routeCalculator;
 
-    private DivisionSetup divisionSetup;
+    private DivisionDistance divisionBoundaries;
 
     private List<Integer> availablePoints;
 
@@ -27,7 +27,7 @@ public class RouteVariants implements BestRouteFinder {
     public RouteVariants(RouteCalculator routeCalculator, int minDistance, int maxDistance) {
         this.routeCalculator = routeCalculator;
         routeCalculator.setRouteVariants(this);
-        this.divisionSetup = new DivisionSetup(minDistance, maxDistance);
+        this.divisionBoundaries = new DivisionDistance(minDistance, maxDistance);
     }
 
 
@@ -56,7 +56,7 @@ public class RouteVariants implements BestRouteFinder {
     }
 
     public void setDistances(int minDistance, int maxDistance) {
-        this.divisionSetup = new DivisionSetup(minDistance, maxDistance);
+        this.divisionBoundaries = new DivisionDistance(minDistance, maxDistance);
         this.calculatedStageRoutes = null;
     }
 
@@ -67,16 +67,16 @@ public class RouteVariants implements BestRouteFinder {
 
     @Override
     public String toString() {
-        if (calculatedStageRoutes==null || divisionSetup==null) {
+        if (calculatedStageRoutes==null || divisionBoundaries ==null) {
             return "Calculations was not started jet";
         }
 
         StringBuilder sb = new StringBuilder();
 
         sb.append("Route contains ").append(calculatedStageRoutes.size()).append(" variant(s), the distance is set up between ")
-                .append(divisionSetup.getMinDistance()).append(" and ").append(divisionSetup.getMaxDistance())
-                .append(", the average perfect distance is ").append(divisionSetup.getPerfectDistance())
-                .append(", calculated with ").append(getSimpleCalculatorName()).append("\n\n");
+                .append(divisionBoundaries.getMin()).append(" and ").append(divisionBoundaries.getMax())
+                .append(", the average perfect distance is ").append(divisionBoundaries.getPerfectDistance())
+                .append(", calculated with ").append(routeCalculator.getName()).append("\n\n");
 
         for (int i = 0; i < calculatedStageRoutes.size(); i++) {
             sb.append(i + 1).append(". ").append(calculatedStageRoutes.get(i).toString()).append("\n");
@@ -84,10 +84,4 @@ public class RouteVariants implements BestRouteFinder {
 
         return sb.toString();
     }
-
-    private String getSimpleCalculatorName() {
-        String[] split = routeCalculator.getClass().toString().split("\\.");
-        return split[split.length - 1];
-    }
-
 }

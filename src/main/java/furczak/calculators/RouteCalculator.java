@@ -1,12 +1,23 @@
 package furczak.calculators;
 
-import furczak.model.StageRoute;
 import furczak.model.RouteVariants;
+import furczak.model.StageRoute;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
-public interface RouteCalculator {
-    List<StageRoute> calculateRoutes();
+@Setter
+@NoArgsConstructor
+public abstract class RouteCalculator {
 
-    void setRouteVariants(RouteVariants routeVariants);
+    protected RouteVariants routeVariants;
+
+
+    public abstract List<StageRoute> calculateRoutes();
+
+    public String getName() {
+        String[] split = this.getClass().toString().split("\\.");
+        return split[split.length - 1];
+    }
 }

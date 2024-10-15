@@ -17,7 +17,6 @@ public abstract class RouteCalculator {
     public abstract List<StageRoute> calculateRoutes();
 
     public String getName() {
-        String[] split = this.getClass().toString().split("\\.");
-        return split[split.length - 1];
+        return this.getClass().getSimpleName();
     }
 }

@@ -36,11 +36,11 @@ class RouteVariantsTest {
         Assertions.assertThat(actual)
                 .extracting(RouteVariants::getRouteCalculator).isEqualTo(calculator);
         Assertions.assertThat(actual)
-                .extracting(RouteVariants::getDivisionDistance)
-                .extracting(DivisionDistance::getMin).isEqualTo(min);
+                .extracting(RouteVariants::getDistanceBoundaries)
+                .extracting(DistanceBoundaries::getMin).isEqualTo(min);
         Assertions.assertThat(actual)
-                .extracting(RouteVariants::getDivisionDistance)
-                .extracting(DivisionDistance::getMax).isEqualTo(max);
+                .extracting(RouteVariants::getDistanceBoundaries)
+                .extracting(DistanceBoundaries::getMax).isEqualTo(max);
         Mockito.verify(calculator).setRouteVariants(actual);
     }
 
@@ -157,7 +157,7 @@ class RouteVariantsTest {
 
         Field divisionField = routeVariantsClass.getDeclaredField("divisionDistance");
         divisionField.setAccessible(true);
-        DivisionDistance division = Instancio.create(DivisionDistance.class);
+        DistanceBoundaries division = Instancio.create(DistanceBoundaries.class);
         divisionField.set(routeVariants, division);
 
         //when:

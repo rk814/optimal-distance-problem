@@ -1,4 +1,4 @@
-package furczak.model.validators;
+package furczak.validators;
 
 import java.util.List;
 

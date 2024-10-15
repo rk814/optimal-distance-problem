@@ -1,7 +1,7 @@
 package furczak.calculators.bruteforce;
 
 import furczak.calculators.RouteCalculator;
-import furczak.model.DivisionDistance;
+import furczak.model.DistanceBoundaries;
 import furczak.model.RouteVariants;
 import furczak.model.StageRoute;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,9 +26,9 @@ class RecurrentRoutesRouteCalculatorTest {
     void calculateRoutes_shouldReturnProperStageRouteListWithOneElement() {
         // given:
         List<Integer> availablePoints = List.of(20, 30, 40);
-        DivisionDistance divisionDistance = new DivisionDistance(15, 30);
+        DistanceBoundaries distanceBoundaries = new DistanceBoundaries(15, 30);
         Mockito.when(routeVariants.getAvailablePoints()).thenReturn(availablePoints);
-        Mockito.when(routeVariants.getDivisionDistance()).thenReturn(divisionDistance);
+        Mockito.when(routeVariants.getDistanceBoundaries()).thenReturn(distanceBoundaries);
 
         // when:
         List<StageRoute> actual = calculator.calculateRoutes();
@@ -43,9 +43,9 @@ class RecurrentRoutesRouteCalculatorTest {
     void calculateRoutes_shouldReturnProperStageRouteListWithTwoElements() {
         // given:
         List<Integer> availablePoints = List.of(20, 25, 30, 40);
-        DivisionDistance divisionDistance = new DivisionDistance(15, 30);
+        DistanceBoundaries distanceBoundaries = new DistanceBoundaries(15, 30);
         Mockito.when(routeVariants.getAvailablePoints()).thenReturn(availablePoints);
-        Mockito.when(routeVariants.getDivisionDistance()).thenReturn(divisionDistance);
+        Mockito.when(routeVariants.getDistanceBoundaries()).thenReturn(distanceBoundaries);
 
         // when:
         List<StageRoute> actual = calculator.calculateRoutes();
@@ -62,9 +62,9 @@ class RecurrentRoutesRouteCalculatorTest {
     void calculateRoutes_shouldReturnProperStageRouteList_whenMinAndMaxDistancesHaveSameValue() {
         // given:
         List<Integer> availablePoints = List.of(15, 30, 45);
-        DivisionDistance divisionDistance = new DivisionDistance(15, 15);
+        DistanceBoundaries distanceBoundaries = new DistanceBoundaries(15, 15);
         Mockito.when(routeVariants.getAvailablePoints()).thenReturn(availablePoints);
-        Mockito.when(routeVariants.getDivisionDistance()).thenReturn(divisionDistance);
+        Mockito.when(routeVariants.getDistanceBoundaries()).thenReturn(distanceBoundaries);
 
         // when:
         List<StageRoute> actual = calculator.calculateRoutes();
@@ -79,9 +79,9 @@ class RecurrentRoutesRouteCalculatorTest {
     void calculateRoutes_shouldReturnEmptyList_whenThereIsNoAvailableRoutesForEntryData() {
         // given:
         List<Integer> availablePoints = List.of(15, 30, 45);
-        DivisionDistance divisionDistance = new DivisionDistance(5, 10);
+        DistanceBoundaries distanceBoundaries = new DistanceBoundaries(5, 10);
         Mockito.when(routeVariants.getAvailablePoints()).thenReturn(availablePoints);
-        Mockito.when(routeVariants.getDivisionDistance()).thenReturn(divisionDistance);
+        Mockito.when(routeVariants.getDistanceBoundaries()).thenReturn(distanceBoundaries);
 
         // when:
         List<StageRoute> actual = calculator.calculateRoutes();
@@ -94,9 +94,9 @@ class RecurrentRoutesRouteCalculatorTest {
     void calculateRoutes_shouldReturnProperStageRouteList_whenAvailablePointsAreOnlyValueOfOne() {
         // given:
         List<Integer> availablePoints = List.of(1);
-        DivisionDistance divisionDistance = new DivisionDistance(1, 1);
+        DistanceBoundaries distanceBoundaries = new DistanceBoundaries(1, 1);
         Mockito.when(routeVariants.getAvailablePoints()).thenReturn(availablePoints);
-        Mockito.when(routeVariants.getDivisionDistance()).thenReturn(divisionDistance);
+        Mockito.when(routeVariants.getDistanceBoundaries()).thenReturn(distanceBoundaries);
 
         // when:
         List<StageRoute> actual = calculator.calculateRoutes();

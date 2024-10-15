@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class DivisionDistance {
+public class DistanceBoundaries {
 
     private int min = 30;
     private int max = 50;

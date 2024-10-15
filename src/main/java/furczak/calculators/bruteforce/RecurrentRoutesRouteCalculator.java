@@ -42,8 +42,8 @@ public class RecurrentRoutesRouteCalculator extends RouteCalculator {
                 result.add(route);
             } else {
                 List<StageRoute> updatedList = routeVariants.getAvailablePoints().stream()
-                        .filter(point -> point >= lastRoutePoint + routeVariants.getDivisionDistance().getMin()
-                                && point <= lastRoutePoint + routeVariants.getDivisionDistance().getMax())
+                        .filter(point -> point >= lastRoutePoint + routeVariants.getDistanceBoundaries().getMin()
+                                && point <= lastRoutePoint + routeVariants.getDistanceBoundaries().getMax())
                         .map(point -> Stream.concat(route.getRoute().stream(), Stream.of(point)).toList())
                         .map(list -> new StageRoute(list, routeVariants))
                         .toList();

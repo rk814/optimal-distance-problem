@@ -28,7 +28,7 @@ class RecurrentRoutesRouteCalculatorTest {
         List<Integer> availablePoints = List.of(20, 30, 40);
         DivisionDistance divisionDistance = new DivisionDistance(15, 30);
         Mockito.when(routeVariants.getAvailablePoints()).thenReturn(availablePoints);
-        Mockito.when(routeVariants.getDivisionBoundaries()).thenReturn(divisionDistance);
+        Mockito.when(routeVariants.getDivisionDistance()).thenReturn(divisionDistance);
 
         // when:
         List<StageRoute> actual = calculator.calculateRoutes();
@@ -45,7 +45,7 @@ class RecurrentRoutesRouteCalculatorTest {
         List<Integer> availablePoints = List.of(20, 25, 30, 40);
         DivisionDistance divisionDistance = new DivisionDistance(15, 30);
         Mockito.when(routeVariants.getAvailablePoints()).thenReturn(availablePoints);
-        Mockito.when(routeVariants.getDivisionBoundaries()).thenReturn(divisionDistance);
+        Mockito.when(routeVariants.getDivisionDistance()).thenReturn(divisionDistance);
 
         // when:
         List<StageRoute> actual = calculator.calculateRoutes();
@@ -64,7 +64,7 @@ class RecurrentRoutesRouteCalculatorTest {
         List<Integer> availablePoints = List.of(15, 30, 45);
         DivisionDistance divisionDistance = new DivisionDistance(15, 15);
         Mockito.when(routeVariants.getAvailablePoints()).thenReturn(availablePoints);
-        Mockito.when(routeVariants.getDivisionBoundaries()).thenReturn(divisionDistance);
+        Mockito.when(routeVariants.getDivisionDistance()).thenReturn(divisionDistance);
 
         // when:
         List<StageRoute> actual = calculator.calculateRoutes();
@@ -81,7 +81,7 @@ class RecurrentRoutesRouteCalculatorTest {
         List<Integer> availablePoints = List.of(15, 30, 45);
         DivisionDistance divisionDistance = new DivisionDistance(5, 10);
         Mockito.when(routeVariants.getAvailablePoints()).thenReturn(availablePoints);
-        Mockito.when(routeVariants.getDivisionBoundaries()).thenReturn(divisionDistance);
+        Mockito.when(routeVariants.getDivisionDistance()).thenReturn(divisionDistance);
 
         // when:
         List<StageRoute> actual = calculator.calculateRoutes();
@@ -96,7 +96,7 @@ class RecurrentRoutesRouteCalculatorTest {
         List<Integer> availablePoints = List.of(1);
         DivisionDistance divisionDistance = new DivisionDistance(1, 1);
         Mockito.when(routeVariants.getAvailablePoints()).thenReturn(availablePoints);
-        Mockito.when(routeVariants.getDivisionBoundaries()).thenReturn(divisionDistance);
+        Mockito.when(routeVariants.getDivisionDistance()).thenReturn(divisionDistance);
 
         // when:
         List<StageRoute> actual = calculator.calculateRoutes();

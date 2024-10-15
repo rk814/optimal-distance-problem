@@ -13,7 +13,7 @@ public class RouteVariants implements BestRouteFinder {
 
     private final RouteCalculator routeCalculator;
 
-    private DivisionDistance divisionBoundaries;
+    private DivisionDistance divisionDistance;
 
     private List<Integer> availablePoints;
 
@@ -27,7 +27,7 @@ public class RouteVariants implements BestRouteFinder {
     public RouteVariants(RouteCalculator routeCalculator, int minDistance, int maxDistance) {
         this.routeCalculator = routeCalculator;
         routeCalculator.setRouteVariants(this);
-        this.divisionBoundaries = new DivisionDistance(minDistance, maxDistance);
+        this.divisionDistance = new DivisionDistance(minDistance, maxDistance);
     }
 
 
@@ -56,7 +56,7 @@ public class RouteVariants implements BestRouteFinder {
     }
 
     public void setDistances(int minDistance, int maxDistance) {
-        this.divisionBoundaries = new DivisionDistance(minDistance, maxDistance);
+        this.divisionDistance = new DivisionDistance(minDistance, maxDistance);
         this.calculatedStageRoutes = null;
     }
 
@@ -67,15 +67,15 @@ public class RouteVariants implements BestRouteFinder {
 
     @Override
     public String toString() {
-        if (calculatedStageRoutes==null || divisionBoundaries ==null) {
+        if (calculatedStageRoutes==null || divisionDistance ==null) {
             return "Calculations was not started jet";
         }
 
         StringBuilder sb = new StringBuilder();
 
         sb.append("Route contains ").append(calculatedStageRoutes.size()).append(" variant(s), the distance is set up between ")
-                .append(divisionBoundaries.getMin()).append(" and ").append(divisionBoundaries.getMax())
-                .append(", the average perfect distance is ").append(divisionBoundaries.getPerfectDistance())
+                .append(divisionDistance.getMin()).append(" and ").append(divisionDistance.getMax())
+                .append(", the average perfect distance is ").append(divisionDistance.getPerfectDistance())
                 .append(", calculated with ").append(routeCalculator.getName()).append("\n\n");
 
         for (int i = 0; i < calculatedStageRoutes.size(); i++) {

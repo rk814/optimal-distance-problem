@@ -14,6 +14,7 @@ public class StageRoute implements Comparable<StageRoute> {
     @Getter
     private final List<Integer> route;
 
+    @Getter
     private List<Integer> routeDistances;
 
     @Getter
@@ -26,16 +27,13 @@ public class StageRoute implements Comparable<StageRoute> {
     public StageRoute(List<Integer> route, RouteVariants routeVariants) {
         this.route = route;
         this.routeVariants = routeVariants;
-        if (isRouteComplete()) {
-            log.info("Route {} was completed", route);
-            this.routeDistances = calculateRouteDistances();
-            this.standardDeviation = calculateStandardDeviation();
-        }
     }
 
 
-    public int getLastRoutePoint() {
-        return route.get(route.size() - 1);
+    public void calculate() {
+        log.info("Route {} was completed", route);
+        this.routeDistances = calculateRouteDistances();
+        this.standardDeviation = calculateStandardDeviation();
     }
 
     public boolean isRouteComplete() {
@@ -45,8 +43,13 @@ public class StageRoute implements Comparable<StageRoute> {
     }
 
     @Override
+    public int compareTo(StageRoute stageRoute) {
+        return Double.compare(this.standardDeviation, stageRoute.getStandardDeviation());
+    }
+
+    @Override
     public String toString() {
-        if (route==null) {
+        if (route == null || route.isEmpty()) {
             return "Route is empty";
         }
 
@@ -56,16 +59,15 @@ public class StageRoute implements Comparable<StageRoute> {
                 ", standard deviation = " + Math.floor(standardDeviation * 10) / 10;
     }
 
-    @Override
-    public int compareTo(StageRoute stageRoute) {
-        return Double.compare(this.standardDeviation, stageRoute.getStandardDeviation());
+    public int getLastRoutePoint() {
+        return (!route.isEmpty()) ? route.get(route.size() - 1) : -1;
     }
 
-
     private List<Integer> calculateRouteDistances() {
-        List<Integer> distances = IntStream.range(1, route.size())
-                .mapToObj(index -> route.get(index) - route.get(index - 1))
-                .toList();
+        List<Integer> distances = IntStream.range(0, route.size())
+                .mapToObj(index ->
+                        (index == 0) ? route.get(index) : route.get(index) - route.get(index-1)
+                ).toList();
         log.debug("Calculated route distances for route: {} are {}", route, distances);
         return distances;
     }

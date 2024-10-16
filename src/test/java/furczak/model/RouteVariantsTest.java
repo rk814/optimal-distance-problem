@@ -155,7 +155,7 @@ class RouteVariantsTest {
         List<StageRoute> testStageRoutes = Instancio.createList(StageRoute.class);
         stageRoutesField.set(routeVariants, testStageRoutes);
 
-        Field divisionField = routeVariantsClass.getDeclaredField("divisionDistance");
+        Field divisionField = routeVariantsClass.getDeclaredField("distanceBoundaries");
         divisionField.setAccessible(true);
         DistanceBoundaries division = Instancio.create(DistanceBoundaries.class);
         divisionField.set(routeVariants, division);

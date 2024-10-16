@@ -39,6 +39,7 @@ public class RecurrentRoutesRouteCalculator extends RouteCalculator {
             int lastRoutePoint = route.getLastRoutePoint();
 
             if (route.isRouteComplete()) {
+                route.calculate();
                 result.add(route);
             } else {
                 List<StageRoute> updatedList = routeVariants.getAvailablePoints().stream()

@@ -53,6 +53,10 @@ public class StageRoute implements Comparable<StageRoute> {
             return "Route is empty";
         }
 
+        if (routeDistances == null || standardDeviation == null) {
+            return "Route: " + route + "\n (use calculate() method to get further information)";
+        }
+
         return "Route: " + route +
                 " has " + routeDistances.size() +
                 " legs: " + routeDistances +
@@ -66,7 +70,7 @@ public class StageRoute implements Comparable<StageRoute> {
     private List<Integer> calculateRouteDistances() {
         List<Integer> distances = IntStream.range(0, route.size())
                 .mapToObj(index ->
-                        (index == 0) ? route.get(index) : route.get(index) - route.get(index-1)
+                        (index == 0) ? route.get(index) : route.get(index) - route.get(index - 1)
                 ).toList();
         log.debug("Calculated route distances for route: {} are {}", route, distances);
         return distances;

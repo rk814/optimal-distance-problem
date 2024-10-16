@@ -36,7 +36,8 @@ class RecurrentRoutesRouteCalculatorTest {
         // then:
         Assertions.assertThat(actual).isNotEmpty()
                 .hasSize(1)
-                .containsExactly(new StageRoute(List.of(0, 20, 40), routeVariants));
+                .extracting(StageRoute::getRoute)
+                .containsExactly(List.of(0, 20, 40));
     }
 
     @Test
@@ -53,9 +54,10 @@ class RecurrentRoutesRouteCalculatorTest {
         // then:
         Assertions.assertThat(actual).isNotEmpty()
                 .hasSize(2)
+                .extracting(StageRoute::getRoute)
                 .containsExactly(
-                        new StageRoute(List.of(0, 20, 40), routeVariants),
-                        new StageRoute(List.of(0, 25, 40), routeVariants));
+                        List.of(0, 20, 40),
+                        List.of(0, 25, 40));
     }
 
     @Test
@@ -72,7 +74,8 @@ class RecurrentRoutesRouteCalculatorTest {
         // then:
         Assertions.assertThat(actual).isNotEmpty()
                 .hasSize(1)
-                .containsExactly(new StageRoute(List.of(0, 15, 30, 45), routeVariants));
+                .extracting(StageRoute::getRoute)
+                .containsExactly(List.of(0, 15, 30, 45));
     }
 
     @Test

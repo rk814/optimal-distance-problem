@@ -189,6 +189,21 @@ class StageRouteTest {
     }
 
     @Test
+    void toString_shouldReturnRouteMessageWithAdvice() {
+        //given:
+        List<Integer> testRoute = List.of(1,2,3);
+        RecurrentRoutesRouteCalculator calculator = new RecurrentRoutesRouteCalculator();
+        RouteVariants routeVariants = new RouteVariants(calculator);
+        StageRoute testStageRoute = new StageRoute(testRoute, routeVariants);
+
+        //when:
+        String actual = testStageRoute.toString();
+
+        //then:
+        Assertions.assertThat(actual).contains("Route", "calculate()");
+    }
+
+    @Test
     void toString_shouldReturnProperMessage() {
         //given:
         StageRoute testStageRoute = Instancio.create(StageRoute.class);

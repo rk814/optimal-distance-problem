@@ -10,7 +10,7 @@ import org.mockito.Mockito;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 
-class RecurrentRoutesRouteCalculatorTest {
+class RecurrentRoutesCalculatorTest {
 
     private RouteVariants routeVariants;
     private RouteCalculator calculator;
@@ -18,7 +18,7 @@ class RecurrentRoutesRouteCalculatorTest {
     @BeforeEach
     void setup() {
         this.routeVariants = Mockito.mock();
-        this.calculator = new RecurrentRoutesRouteCalculator();
+        this.calculator = new RecurrentRoutesCalculator();
         calculator.setRouteVariants(routeVariants);
     }
 

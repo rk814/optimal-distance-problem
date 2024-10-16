@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 @Setter
 @Slf4j
 @NoArgsConstructor
-public class RecurrentRoutesRouteCalculator extends RouteCalculator {
+public class RecurrentRoutesCalculator extends RouteCalculator {
 
     /**
      * Calculates routes with recurrent method.

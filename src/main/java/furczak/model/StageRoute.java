@@ -4,13 +4,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.IntStream;
 
 @Slf4j
 @EqualsAndHashCode
-public class StageRoute implements Comparable<StageRoute> {
+public class StageRoute implements Comparable<StageRoute>, Cloneable {
     @Getter
     private final List<Integer> route;
 
@@ -47,6 +48,13 @@ public class StageRoute implements Comparable<StageRoute> {
         return Double.compare(this.standardDeviation, stageRoute.getStandardDeviation());
     }
 
+    //    public StageRoute clone() {
+//        ArrayList<Integer> routeClone = new ArrayList<>(route);
+//        StageRoute clone = new StageRoute(routeClone, routeVariants);
+//        clone.calculate();
+//        return clone;
+//    }
+
     @Override
     public String toString() {
         if (route == null || route.isEmpty()) {
@@ -54,7 +62,7 @@ public class StageRoute implements Comparable<StageRoute> {
         }
 
         if (routeDistances == null || standardDeviation == null) {
-            return "Route: " + route + "\n (use calculate() method to get further information)";
+            return "Route: " + route + " (use calculate() method to get further information)";
         }
 
         return "Route: " + route +

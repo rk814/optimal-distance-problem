@@ -55,6 +55,10 @@ public class RouteVariants implements BestRouteFinder {
         return calculatedStageRoutes;
     }
 
+    public int getLastAvailablePoint() {
+        return availablePoints.get(availablePoints.size()-1);
+    }
+
     public void setDistances(int minDistance, int maxDistance) {
         this.distanceBoundaries = new DistanceBoundaries(minDistance, maxDistance);
         this.calculatedStageRoutes = null;

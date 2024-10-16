@@ -1,6 +1,6 @@
 package furczak.model;
 
-import furczak.calculators.bruteforce.RecurrentRoutesRouteCalculator;
+import furczak.calculators.bruteforce.RecurrentRoutesCalculator;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.instancio.Instancio;
@@ -19,7 +19,7 @@ class StageRouteTest {
     void calculate_shouldCalculateRouteDistancesAndStandardDeviation() {
         //given:
         List<Integer> testRoute = List.of(2, 4, 6);
-        RecurrentRoutesRouteCalculator calculator = new RecurrentRoutesRouteCalculator();
+        RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
         int min = 1, max = 2;
         RouteVariants routeVariants = new RouteVariants(calculator, min, max);
         StageRoute testStageRoute = new StageRoute(testRoute, routeVariants);
@@ -40,7 +40,7 @@ class StageRouteTest {
     void calculate_shouldThrowNoSuchElementException() {
         //given:
         List<Integer> testRoute = List.of();
-        RecurrentRoutesRouteCalculator calculator = new RecurrentRoutesRouteCalculator();
+        RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
         int min = 1, max = 2;
         RouteVariants routeVariants = new RouteVariants(calculator, min, max);
         StageRoute testStageRoute = new StageRoute(testRoute, routeVariants);
@@ -54,7 +54,7 @@ class StageRouteTest {
     void isRouteComplete_shouldReturnTrue() throws NoSuchFieldException, IllegalAccessException {
         //given:
         List<Integer> testRoute = List.of(1, 2, 3);
-        RecurrentRoutesRouteCalculator calculator = new RecurrentRoutesRouteCalculator();
+        RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
         RouteVariants routeVariants = new RouteVariants(calculator);
         StageRoute testStageRoute = new StageRoute(testRoute, routeVariants);
 
@@ -75,7 +75,7 @@ class StageRouteTest {
     void isRouteComplete_shouldReturnFalse() throws NoSuchFieldException, IllegalAccessException {
         //given:
         List<Integer> testRoute = List.of(1, 2, 3);
-        RecurrentRoutesRouteCalculator calculator = new RecurrentRoutesRouteCalculator();
+        RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
         RouteVariants routeVariants = new RouteVariants(calculator);
         StageRoute testStageRoute = new StageRoute(testRoute, routeVariants);
 
@@ -147,7 +147,7 @@ class StageRouteTest {
     void getLastRoutePoint_shouldReturnLastPoint() {
         //given:
         List<Integer> testRoute = List.of(1, 2, 3);
-        RecurrentRoutesRouteCalculator calculator = new RecurrentRoutesRouteCalculator();
+        RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
         RouteVariants routeVariants = new RouteVariants(calculator);
         StageRoute testStageRoute = new StageRoute(testRoute, routeVariants);
 
@@ -162,7 +162,7 @@ class StageRouteTest {
     void getLastRoutePoint_shouldReturnMinus1() {
         //given:
         List<Integer> testRoute = List.of();
-        RecurrentRoutesRouteCalculator calculator = new RecurrentRoutesRouteCalculator();
+        RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
         RouteVariants routeVariants = new RouteVariants(calculator);
         StageRoute testStageRoute = new StageRoute(testRoute, routeVariants);
 
@@ -177,7 +177,7 @@ class StageRouteTest {
     void toString_shouldReturnRouteIsEmptyMessage() {
         //given:
         List<Integer> testRoute = List.of();
-        RecurrentRoutesRouteCalculator calculator = new RecurrentRoutesRouteCalculator();
+        RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
         RouteVariants routeVariants = new RouteVariants(calculator);
         StageRoute testStageRoute = new StageRoute(testRoute, routeVariants);
 
@@ -192,7 +192,7 @@ class StageRouteTest {
     void toString_shouldReturnRouteMessageWithAdvice() {
         //given:
         List<Integer> testRoute = List.of(1,2,3);
-        RecurrentRoutesRouteCalculator calculator = new RecurrentRoutesRouteCalculator();
+        RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
         RouteVariants routeVariants = new RouteVariants(calculator);
         StageRoute testStageRoute = new StageRoute(testRoute, routeVariants);
 

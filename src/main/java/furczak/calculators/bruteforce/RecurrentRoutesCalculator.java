@@ -28,7 +28,7 @@ public class RecurrentRoutesCalculator extends RouteCalculator {
     public List<StageRoute> calculateRoutes() {
         log.trace("Started calculateRoutes() method...");
         List<StageRoute> startStageRouteList = new ArrayList<>();
-        startStageRouteList.add(new StageRoute(List.of(0), routeVariants));
+        startStageRouteList.add(new StageRoute(List.of(routeVariants.getFirstAvailablePoint()), routeVariants));
         return calculateRoutesWithRecurrence(startStageRouteList);
     }
 

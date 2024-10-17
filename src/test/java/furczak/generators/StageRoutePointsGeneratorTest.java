@@ -45,7 +45,7 @@ class StageRoutePointsGeneratorTest {
     void addSampleRoutPoints_shouldAddNewList() {
         //given:
         int key = 111;
-        List<Integer> testList = List.of(23, 44, 57);
+        List<Integer> testList = List.of(0, 23, 44, 57);
 
         //when:
         generator.addSampleRoutPoints(key,testList);

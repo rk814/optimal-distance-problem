@@ -13,8 +13,8 @@ public class RouteVariantsValidator {
     }
 
     public void validateAvailablePoints(List<Integer> availablePoints) {
-        if (availablePoints.isEmpty()) {
-            throw new IllegalArgumentException("List of available points is empty");
+        if (availablePoints == null || availablePoints.size() <= 1) {
+            throw new IllegalArgumentException("List of available points must contain at least 2 points");
         }
         if (availablePoints.stream().anyMatch(point -> point <= 0)) {
             throw new IllegalArgumentException("List of available points cannot contain values less or equal to 0");

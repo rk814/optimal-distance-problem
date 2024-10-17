@@ -18,7 +18,7 @@ class StageRouteTest {
     @Test
     void calculate_shouldCalculateRouteDistancesAndStandardDeviation() {
         //given:
-        List<Integer> testRoute = List.of(2, 4, 6);
+        List<Integer> testRoute = List.of(0, 2, 4, 6);
         RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
         int min = 1, max = 2;
         RouteVariants routeVariants = new RouteVariants(calculator, min, max);
@@ -53,7 +53,7 @@ class StageRouteTest {
     @Test
     void isRouteComplete_shouldReturnTrue() throws NoSuchFieldException, IllegalAccessException {
         //given:
-        List<Integer> testRoute = List.of(1, 2, 3);
+        List<Integer> testRoute = List.of(0, 1, 2, 3);
         RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
         RouteVariants routeVariants = new RouteVariants(calculator);
         StageRoute testStageRoute = new StageRoute(testRoute, routeVariants);
@@ -74,7 +74,7 @@ class StageRouteTest {
     @Test
     void isRouteComplete_shouldReturnFalse() throws NoSuchFieldException, IllegalAccessException {
         //given:
-        List<Integer> testRoute = List.of(1, 2, 3);
+        List<Integer> testRoute = List.of(0, 1, 2, 3);
         RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
         RouteVariants routeVariants = new RouteVariants(calculator);
         StageRoute testStageRoute = new StageRoute(testRoute, routeVariants);
@@ -146,7 +146,7 @@ class StageRouteTest {
     @Test
     void getLastRoutePoint_shouldReturnLastPoint() {
         //given:
-        List<Integer> testRoute = List.of(1, 2, 3);
+        List<Integer> testRoute = List.of(0, 1, 2, 3);
         RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
         RouteVariants routeVariants = new RouteVariants(calculator);
         StageRoute testStageRoute = new StageRoute(testRoute, routeVariants);
@@ -191,7 +191,7 @@ class StageRouteTest {
     @Test
     void toString_shouldReturnRouteMessageWithAdvice() {
         //given:
-        List<Integer> testRoute = List.of(1,2,3);
+        List<Integer> testRoute = List.of(0, 1,2,3);
         RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
         RouteVariants routeVariants = new RouteVariants(calculator);
         StageRoute testStageRoute = new StageRoute(testRoute, routeVariants);

@@ -29,13 +29,6 @@ public class StageRoute implements Comparable<StageRoute> {
         this.routeVariants = routeVariants;
     }
 
-
-    public void calculate() {
-        log.info("Route {} was completed", route);
-        this.routeDistances = calculateRouteDistances();
-        this.standardDeviation = calculateStandardDeviation();
-    }
-
     public boolean isRouteComplete() {
         List<Integer> availablePoints = routeVariants.getAvailablePoints();
         int lastAvailablePoint = availablePoints.get(availablePoints.size() - 1);
@@ -67,10 +60,15 @@ public class StageRoute implements Comparable<StageRoute> {
         return (!route.isEmpty()) ? route.get(route.size() - 1) : -1;
     }
 
+    protected void calculate() {
+        log.info("Route {} was completed", route);
+        this.routeDistances = calculateRouteDistances();
+        this.standardDeviation = calculateStandardDeviation();
+    }
+
     private List<Integer> calculateRouteDistances() {
-        List<Integer> distances = IntStream.range(0, route.size())
-                .mapToObj(index ->
-                        (index == 0) ? route.get(index) : route.get(index) - route.get(index - 1)
+        List<Integer> distances = IntStream.range(1, route.size())
+                .mapToObj(index -> route.get(index) - route.get(index - 1)
                 ).toList();
         log.debug("Calculated route distances for route: {} are {}", route, distances);
         return distances;

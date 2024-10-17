@@ -67,7 +67,7 @@ class RouteVariantsValidatorTest {
         //when and then:
         Assertions.assertThatThrownBy(() -> validator.validateAvailablePoints(points))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("List of available points is empty");
+                .hasMessageContaining("List of available points must contain at least 2 points");
     }
 
     @Test

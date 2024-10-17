@@ -20,9 +20,9 @@ public class IteratorRoutesCalculator extends RouteCalculator {
         List<Integer> availablePoints = routeVariants.getAvailablePoints();
 
         List<StageRoute> routes = new ArrayList<>();
-        routes.add(new StageRoute(List.of(0), routeVariants));
+        routes.add(new StageRoute(List.of(routeVariants.getFirstAvailablePoint()), routeVariants));
 
-        for (Integer nextPoint : availablePoints) {
+        for (Integer nextPoint : availablePoints.subList(1,availablePoints.size())) {
             ListIterator<StageRoute> routesIterator = routes.listIterator();
 
             while (routesIterator.hasNext()) {

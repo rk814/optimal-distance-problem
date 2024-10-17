@@ -58,7 +58,11 @@ public class RouteVariants implements BestRouteFinder {
     }
 
     public int getLastAvailablePoint() {
-        return availablePoints.get(availablePoints.size()-1);
+        return availablePoints.get(availablePoints.size() - 1);
+    }
+
+    public int getFirstAvailablePoint() {
+        return availablePoints.get(0);
     }
 
     public void setDistances(int minDistance, int maxDistance) {
@@ -73,7 +77,7 @@ public class RouteVariants implements BestRouteFinder {
 
     @Override
     public String toString() {
-        if (calculatedStageRoutes==null || distanceBoundaries ==null) {
+        if (calculatedStageRoutes == null || distanceBoundaries == null) {
             return "Calculations was not started jet";
         }
 

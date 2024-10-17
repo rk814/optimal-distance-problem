@@ -48,7 +48,7 @@ class RouteVariantsTest {
     @Test
     void calculate_shouldCalculateAndSortRoutes_whenRoutesReturn() {
         //given:
-        List<Integer> availablePoints = List.of(15, 20, 25, 40);
+        List<Integer> availablePoints = List.of(0, 15, 20, 25, 40);
         RouteVariants routeVariants = new RouteVariants(calculator, 15, 25);
         routeVariants.setAvailablePoints(availablePoints);
 
@@ -75,7 +75,7 @@ class RouteVariantsTest {
     @Test
     void calculate_shouldSetEmptyList_whenNoRoutesReturn() {
         //given:
-        List<Integer> availablePoints = List.of(15, 20, 25, 40);
+        List<Integer> availablePoints = List.of(0, 15, 20, 25, 40);
         RouteVariants routeVariants = new RouteVariants(calculator, 1, 5);
         routeVariants.setAvailablePoints(availablePoints);
 

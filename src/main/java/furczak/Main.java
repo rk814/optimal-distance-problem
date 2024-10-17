@@ -15,7 +15,7 @@ public class Main {
 
 
         List<Integer> availablePoints = generator.getSampleRoutePoints(1);
-//        List<Integer> availablePoints = generator.generateRandomRoutePoints(50, 400);
+//        List<Integer> availablePoints = generator.generateRandomRoutePoints(50,0, 400);
         System.out.printf("Points list: %s%n", availablePoints);
 
         RouteVariants simpleRouteVariants = new RouteVariants(new RecurrentRoutesCalculator(), 22, 44);

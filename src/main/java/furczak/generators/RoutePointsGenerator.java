@@ -29,31 +29,40 @@ public class RoutePointsGenerator {
     }
 
     /**
-     * Generates a random sequence of route points between the start point (0) and the specified end point.
+     * Generates a random sequence of route points between the specified start point and the end point.
      *
      * @param numberOfPoints the number of random intermediate points to generate between the start point and end point.
-     *                       If this value is 0 or less, no random points will be added.
-     * @param endPoint the destination point, which must be greater than 1.
-     * @return a list of points starting with 0, containing random intermediate points (if any), and ending with {@code endPoint}.
-     *         The list is sorted in ascending order. Points can have duplicates.
-     * @throws IllegalArgumentException if {@code endPoint} is less than or equal to 1.
+     *      If this value is 0 or less, no random points will be added.
+     * @param startPoint the departure point, which must be equal or greater than 0.
+     * @param endPoint the destination point, which must be equal or greater than 2 and also greater than {@code startPoint}
+     *      by at least 2.
+     * @return a list of points starting with {@code startPoint}, containing random intermediate points (if any),
+     *      and ending with {@code endPoint}. The list is sorted in ascending order. Points can have duplicates.
+     * @throws IllegalArgumentException if {@code startPoint} is less than 0 or {@code endPoint} is less than 2
+     *      or {@code endPoint} is not greater then {@code startPoint} at least by 2.
      */
-    public List<Integer> generateRandomRoutePoints(int numberOfPoints, int endPoint) {
-        endPointValidator(endPoint);
+    public List<Integer> generateRandomRoutePoints(int numberOfPoints, int startPoint, int endPoint) {
+        endPointValidator(startPoint, endPoint);
         List<Integer> randomRoutePoints = new ArrayList<>();
 
-        randomRoutePoints.add(0);
+        randomRoutePoints.add(startPoint);
         for (int i = 0; i < numberOfPoints; i++) {
-            randomRoutePoints.add(random.nextInt(1, endPoint));
+            randomRoutePoints.add(random.nextInt(startPoint + 1, endPoint));
         }
         randomRoutePoints.add(endPoint);
 
         return randomRoutePoints.stream().sorted().toList();
     }
 
-    private void endPointValidator(int endPoint) {
-        if (endPoint <= 1) {
+    private void endPointValidator(int startPoint, int endPoint) {
+        if (startPoint < 0) {
+            throw new IllegalArgumentException("Start point must be equal or greater than 0");
+        }
+        if (endPoint < 2) {
             throw new IllegalArgumentException("End point must be greater than 1");
+        }
+        if (startPoint - endPoint > 1) {
+            throw new IllegalArgumentException("End point must be greater start point at least by 2");
         }
     }
 }

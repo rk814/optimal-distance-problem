@@ -3,6 +3,7 @@ package furczak.calculators.bruteforce;
 import furczak.calculators.RouteCalculator;
 import furczak.model.StageRoute;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +11,12 @@ import java.util.ListIterator;
 import java.util.stream.Stream;
 
 @Setter
+@Slf4j
 public class IteratorRoutesCalculator extends RouteCalculator {
 
     @Override
     public List<StageRoute> calculateRoutes() {
+        log.trace("Started calculateRoutes() method...");
         List<Integer> availablePoints = routeVariants.getAvailablePoints();
 
         List<StageRoute> routes = new ArrayList<>();

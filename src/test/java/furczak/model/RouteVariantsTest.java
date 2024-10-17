@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -45,22 +46,49 @@ class RouteVariantsTest {
     }
 
     @Test
-    void calculate_shouldCallCalculateRoutesMethod() {
+    void calculate_shouldCalculateAndSortRoutes_whenRoutesReturn() {
         //given:
-        List<Integer> availablePoints = List.of(1, 2, 3);
-        RouteVariants routeVariants = new RouteVariants(calculator);
+        List<Integer> availablePoints = List.of(15, 20, 25, 40);
+        RouteVariants routeVariants = new RouteVariants(calculator, 15, 25);
         routeVariants.setAvailablePoints(availablePoints);
 
-        List<StageRoute> resultOfCalculations = Instancio.createList(StageRoute.class);
+        List<StageRoute> resultOfCalculations = new ArrayList<>();
+        StageRoute route1 = new StageRoute(List.of(0, 25, 40), routeVariants);
+        StageRoute route2 = new StageRoute(List.of(0, 20, 40), routeVariants);
+        resultOfCalculations.add(route1);
+        resultOfCalculations.add(route2);
         Mockito.when(calculator.calculateRoutes()).thenReturn(resultOfCalculations);
 
         //when:
         routeVariants.calculate();
 
         //then:
+        Mockito.verify(calculator, Mockito.times(1)).calculateRoutes();
         Assertions.assertThat(routeVariants.getCalculatedStageRoutes())
                 .isNotEmpty()
-                .isEqualTo(resultOfCalculations);
+                .contains(route1, route2)
+                .allMatch(r -> r.getStandardDeviation() != null && r.getRouteDistances() != null);
+        Assertions.assertThat(routeVariants.getCalculatedStageRoutes().get(0))
+                .isLessThan(routeVariants.getCalculatedStageRoutes().get(1));
+    }
+
+    @Test
+    void calculate_shouldSetEmptyList_whenNoRoutesReturn() {
+        //given:
+        List<Integer> availablePoints = List.of(15, 20, 25, 40);
+        RouteVariants routeVariants = new RouteVariants(calculator, 1, 5);
+        routeVariants.setAvailablePoints(availablePoints);
+
+        List<StageRoute> resultOfCalculations = new ArrayList<>();
+        Mockito.when(calculator.calculateRoutes()).thenReturn(resultOfCalculations);
+
+        //when:
+        routeVariants.calculate();
+
+        //then:
+        Mockito.verify(calculator, Mockito.times(1)).calculateRoutes();
+        Assertions.assertThat(routeVariants.getCalculatedStageRoutes())
+                .isEmpty();
     }
 
     @Test
@@ -81,8 +109,8 @@ class RouteVariantsTest {
         Field field = routeVariantsClass.getDeclaredField("calculatedStageRoutes");
         field.setAccessible(true);
         List<StageRoute> testStageRoutes = List.of(
-                Instancio.of(StageRoute.class).set(field("standardDeviation"), 1.1).create(),
                 Instancio.of(StageRoute.class).set(field("standardDeviation"), 5.5).create(),
+                Instancio.of(StageRoute.class).set(field("standardDeviation"), 1.1).create(),
                 Instancio.of(StageRoute.class).set(field("standardDeviation"), 2.8).create()
         );
         field.set(routeVariants, testStageRoutes);

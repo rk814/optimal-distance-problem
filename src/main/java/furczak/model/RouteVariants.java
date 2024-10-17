@@ -1,6 +1,7 @@
 package furczak.model;
 
 import furczak.calculators.RouteCalculator;
+import furczak.comparators.StandardDeviationComparator;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,15 +38,16 @@ public class RouteVariants implements BestRouteFinder {
         if (availablePoints == null) {
             throw new NullPointerException("Set up available route points first");
         }
-        this.calculatedStageRoutes = routeCalculator.calculateRoutes();
+        List<StageRoute> calculatedStageRoutes = routeCalculator.calculateRoutes();
+        calculatedStageRoutes.forEach(StageRoute::calculate);
+        calculatedStageRoutes.sort(new StandardDeviationComparator());
+        this.calculatedStageRoutes = calculatedStageRoutes;
     }
 
     @Override
     public StageRoute getBestRoute() {
-        List<Double> sequencesDeviation = calculatedStageRoutes.stream().map(StageRoute::getStandardDeviation).toList();
-        double bestSequenceDeviation = sequencesDeviation.stream().min(Double::compareTo)
+        return calculatedStageRoutes.stream().min(StageRoute::compareTo)
                 .orElseThrow(() -> new NoSuchElementException("Empty sequences list"));
-        return calculatedStageRoutes.get(sequencesDeviation.indexOf(bestSequenceDeviation));
     }
 
     public List<StageRoute> getCalculatedStageRoutes() {

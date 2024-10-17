@@ -51,6 +51,7 @@ class IteratorRoutesCalculatorTest {
         List<Integer> availablePoints = List.of(20, 25, 30, 40);
         DistanceBoundaries distanceBoundaries = new DistanceBoundaries(15, 30);
         Mockito.when(routeVariants.getAvailablePoints()).thenReturn(availablePoints);
+        Mockito.when(routeVariants.getLastAvailablePoint()).thenReturn(40);
         Mockito.when(routeVariants.getDistanceBoundaries()).thenReturn(distanceBoundaries);
 
         // when:
@@ -60,7 +61,7 @@ class IteratorRoutesCalculatorTest {
         Assertions.assertThat(actual).isNotEmpty()
                 .hasSize(2)
                 .extracting(StageRoute::getRoute)
-                .containsExactly(
+                .contains(
                         List.of(0, 20, 40),
                         List.of(0, 25, 40));
     }
@@ -71,6 +72,7 @@ class IteratorRoutesCalculatorTest {
         List<Integer> availablePoints = List.of(15, 30, 45);
         DistanceBoundaries distanceBoundaries = new DistanceBoundaries(15, 15);
         Mockito.when(routeVariants.getAvailablePoints()).thenReturn(availablePoints);
+        Mockito.when(routeVariants.getLastAvailablePoint()).thenReturn(45);
         Mockito.when(routeVariants.getDistanceBoundaries()).thenReturn(distanceBoundaries);
 
         // when:
@@ -80,7 +82,7 @@ class IteratorRoutesCalculatorTest {
         Assertions.assertThat(actual).isNotEmpty()
                 .hasSize(1)
                 .extracting(StageRoute::getRoute)
-                .containsExactly(List.of(0, 15, 30, 45));
+                .contains(List.of(0, 15, 30, 45));
     }
 
     @Test
@@ -89,6 +91,7 @@ class IteratorRoutesCalculatorTest {
         List<Integer> availablePoints = List.of(15, 30, 45);
         DistanceBoundaries distanceBoundaries = new DistanceBoundaries(5, 10);
         Mockito.when(routeVariants.getAvailablePoints()).thenReturn(availablePoints);
+        Mockito.when(routeVariants.getLastAvailablePoint()).thenReturn(40);
         Mockito.when(routeVariants.getDistanceBoundaries()).thenReturn(distanceBoundaries);
 
         // when:
@@ -104,6 +107,7 @@ class IteratorRoutesCalculatorTest {
         List<Integer> availablePoints = List.of(1);
         DistanceBoundaries distanceBoundaries = new DistanceBoundaries(1, 1);
         Mockito.when(routeVariants.getAvailablePoints()).thenReturn(availablePoints);
+        Mockito.when(routeVariants.getLastAvailablePoint()).thenReturn(40);
         Mockito.when(routeVariants.getDistanceBoundaries()).thenReturn(distanceBoundaries);
 
         // when:

@@ -1,5 +1,6 @@
 package furczak;
 
+import furczak.calculators.bruteforce.IteratorRoutesCalculator;
 import furczak.calculators.bruteforce.RecurrentRoutesCalculator;
 import furczak.generators.RoutePointsGenerator;
 import furczak.model.StageRoute;

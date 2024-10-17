@@ -50,7 +50,7 @@ class RouteVariantsValidatorTest {
     @Test
     void validateAvailablePoints_shouldNotThrowAnyException() {
         //given:
-        List<Integer> points = List.of(23,45,67);
+        List<Integer> points = List.of(23, 45, 67);
         RouteVariantsValidator validator = new RouteVariantsValidator();
 
         //when and then:
@@ -73,12 +73,24 @@ class RouteVariantsValidatorTest {
     @Test
     void validateAvailablePoints_shouldThrowIllegalArgumentException_whenThereAreAnyPointsLowerThan0() {
         //given:
-        List<Integer> points = List.of(-4,0,23,45);
+        List<Integer> points = List.of(-4, 0, 23, 45);
         RouteVariantsValidator validator = new RouteVariantsValidator();
 
         //when and then:
         Assertions.assertThatThrownBy(() -> validator.validateAvailablePoints(points))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("List of available points cannot contain values less than 0");
+    }
+
+    @Test
+    void validateAvailablePoints_shouldThrowIllegalArgumentException_whenListOfPointIsNotSorted() {
+        //given:
+        List<Integer> points = List.of(23, 12, 45, 0);
+        RouteVariantsValidator validator = new RouteVariantsValidator();
+
+        //when and then:
+        Assertions.assertThatThrownBy(() -> validator.validateAvailablePoints(points))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("List of available points must be in ascending order");
     }
 }

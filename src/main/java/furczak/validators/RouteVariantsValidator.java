@@ -1,6 +1,7 @@
 package furczak.validators;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class RouteVariantsValidator {
     public void validateDistances(int min, int max) {
@@ -19,5 +20,12 @@ public class RouteVariantsValidator {
         if (availablePoints.stream().anyMatch(point -> point < 0)) {
             throw new IllegalArgumentException("List of available points cannot contain values less than 0");
         }
+        if (!isSorted(availablePoints)) {
+            throw new IllegalArgumentException("List of available points must be in ascending order");
+        }
+    }
+
+    private boolean isSorted(List<Integer> list) {
+        return IntStream.range(1, list.size()).allMatch(n -> list.get(n) >= list.get(n - 1));
     }
 }

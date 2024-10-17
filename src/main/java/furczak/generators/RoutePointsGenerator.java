@@ -1,10 +1,13 @@
 package furczak.generators;
 
+import furczak.validators.RoutePointsGeneratorValidator;
 import lombok.Getter;
 
 import java.util.*;
 
 public class RoutePointsGenerator {
+
+    private final RoutePointsGeneratorValidator validator = new RoutePointsGeneratorValidator();
 
     private final Random random = new Random();
 
@@ -14,6 +17,7 @@ public class RoutePointsGenerator {
             2, List.of(0, 3, 9, 13, 33, 34, 34, 44, 48, 57, 64, 66, 70, 75, 76, 76, 79, 98, 102, 122, 124, 135, 143, 149, 150, 151, 157, 161, 162, 162, 163, 163, 180, 188, 190, 190, 205, 207, 213, 227, 229, 230, 233, 244, 249, 250, 254, 255, 256, 269, 291, 300),
             3, List.of(0, 9, 12, 13, 18, 35, 37, 40, 40, 51, 52, 60, 64, 72, 73, 73, 75, 81, 87, 98, 117, 136, 158, 164, 172, 175, 194, 195, 198, 209, 222, 224, 225, 235, 245, 266, 268, 292, 294, 304, 314, 321, 322, 326, 336, 339, 347, 354, 359, 360, 397, 400)
     ));
+    private final RoutePointsGeneratorValidator routePointsGeneratorValidator = new RoutePointsGeneratorValidator();
 
 
     public List<Integer> getSampleRoutePoints(int key) {
@@ -42,7 +46,7 @@ public class RoutePointsGenerator {
      *      or {@code endPoint} is not greater then {@code startPoint} at least by 2.
      */
     public List<Integer> generateRandomRoutePoints(int numberOfPoints, int startPoint, int endPoint) {
-        endPointValidator(startPoint, endPoint);
+        validator.pointsValidator(startPoint, endPoint);
         List<Integer> randomRoutePoints = new ArrayList<>();
 
         randomRoutePoints.add(startPoint);
@@ -52,17 +56,5 @@ public class RoutePointsGenerator {
         randomRoutePoints.add(endPoint);
 
         return randomRoutePoints.stream().sorted().toList();
-    }
-
-    private void endPointValidator(int startPoint, int endPoint) {
-        if (startPoint < 0) {
-            throw new IllegalArgumentException("Start point must be equal or greater than 0");
-        }
-        if (endPoint < 2) {
-            throw new IllegalArgumentException("End point must be greater than 1");
-        }
-        if (startPoint - endPoint > 1) {
-            throw new IllegalArgumentException("End point must be greater start point at least by 2");
-        }
     }
 }

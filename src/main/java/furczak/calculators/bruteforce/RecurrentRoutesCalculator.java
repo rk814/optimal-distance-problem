@@ -15,15 +15,6 @@ import java.util.stream.Stream;
 @NoArgsConstructor
 public class RecurrentRoutesCalculator extends RouteCalculator {
 
-    /**
-     * Calculates routes with recurrent method.
-     * <p>
-     * Calculations are initialised with list of stage routes with one start stage route containing a point of 0 integer value.
-     * This list is updated during each pass of the method and returned as the final result.
-     * The recursive logic is handled by the private method `calculateRoutesWithRecurrence()`.
-     * </p>
-     * @return list with stage routes
-     */
     @Override
     public List<StageRoute> calculateRoutes() {
         log.trace("Started calculateRoutes() method...");

@@ -7,8 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class DistanceBoundaries {
 
-    private int min = 30;
-    private int max = 50;
+    private int min;
+    private int max;
 
     int getPerfectDistance() {
         return (min + max) / 2;

@@ -71,14 +71,14 @@ class RouteVariantsValidatorTest {
     }
 
     @Test
-    void validateAvailablePoints_shouldThrowIllegalArgumentException_whenThereAreAnyPointsLowerThan1() {
+    void validateAvailablePoints_shouldThrowIllegalArgumentException_whenThereAreAnyPointsLowerThan0() {
         //given:
-        List<Integer> points = List.of(0,23,45);
+        List<Integer> points = List.of(-4,0,23,45);
         RouteVariantsValidator validator = new RouteVariantsValidator();
 
         //when and then:
         Assertions.assertThatThrownBy(() -> validator.validateAvailablePoints(points))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("List of available points cannot contain values less or equal to 0");
+                .hasMessageContaining("List of available points cannot contain values less than 0");
     }
 }

@@ -39,6 +39,7 @@ public class RouteVariants implements BestRouteFinder {
     public RouteVariants(RouteCalculator routeCalculator, int minDistance, int maxDistance) {
         this.routeCalculator = routeCalculator;
         routeCalculator.setRouteVariants(this);
+        validator.validateDistances(minDistance, maxDistance);
         this.distanceBoundaries = new DistanceBoundaries(minDistance, maxDistance);
     }
 

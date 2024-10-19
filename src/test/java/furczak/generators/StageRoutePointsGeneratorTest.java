@@ -6,9 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.stream.Stream;
 
 
 class StageRoutePointsGeneratorTest {
@@ -16,7 +18,7 @@ class StageRoutePointsGeneratorTest {
     private final RoutePointsGenerator generator = new RoutePointsGenerator();
 
     @Test
-    void getSampleRoutePoints_shouldReturnRequestPointList() {
+    void getSampleRoutePoints_shouldReturnRequestPointList_whenKeyIsValid() {
         //given:
         int key = 1;
         List<Integer> sampleList = generator.getSampleLists().get(key);
@@ -33,7 +35,7 @@ class StageRoutePointsGeneratorTest {
     }
 
     @Test
-    void getSampleRoutePoints_shouldThrowNoSuchElementException() {
+    void getSampleRoutePoints_shouldThrowNoSuchElementException_whenKeyIsNotValid() {
         //given:
         int key = 0;
         List<Integer> sampleList = generator.getSampleLists().get(key);
@@ -43,22 +45,30 @@ class StageRoutePointsGeneratorTest {
                 .isInstanceOf(NoSuchElementException.class);
     }
 
-    @Test
-    void addSampleRoutPoints_shouldAddNewList() {
+    @ParameterizedTest
+    @CsvSource({
+            "111,'0,23,44,57'",
+            "112,'0,2,4,6'",
+            "113,'100,105'",
+            "111,''",
+    })
+    void addSampleRoutPoints_shouldAddNewList_whenListNotEmptyOrEmptyProvided(
+            int key, String routePointsList
+    ) {
         //given:
-        int key = 111;
-        List<Integer> testList = List.of(0, 23, 44, 57);
+        List<Integer> routePoints = routePointsList.isBlank() ? new ArrayList<>()
+                : Stream.of(routePointsList.split(",")).map(Integer::parseInt).toList();
 
         //when:
-        generator.addSampleRoutPoints(key, testList);
+        generator.addSampleRoutPoints(key, routePoints);
         Map<Integer, List<Integer>> actual = generator.getSampleLists();
 
         //then:
         Assertions.assertThat(actual)
                 .containsKey(key)
                 .extractingByKey(key, InstanceOfAssertFactories.list(Integer.class))
-                .hasSize(testList.size())
-                .containsExactlyElementsOf(testList);
+                .hasSize(routePoints.size())
+                .containsExactlyElementsOf(routePoints);
     }
 
     @ParameterizedTest
@@ -70,7 +80,8 @@ class StageRoutePointsGeneratorTest {
             "200,0,2,202",
             "0,0,200,2"
     })
-    void generateRandomRoutePoints_shouldReturnRequestedList(int listLength, int startNumber, int endNumber, int expectedListSize) {
+    void generateRandomRoutePoints_shouldReturnRequestList_whenArgumentsAreValid(
+            int listLength, int startNumber, int endNumber, int expectedListSize) {
         //when:
         List<Integer> actual = generator.generateRandomRoutePoints(listLength, startNumber, endNumber);
 
@@ -89,7 +100,8 @@ class StageRoutePointsGeneratorTest {
             "10,0,-3",
             "10,4,4"
     })
-    void generateRandomRoutePoints_shouldThrowIllegalArgumentException(int listLength, int startNumber, int endNumber) {
+    void generateRandomRoutePoints_shouldThrowIllegalArgumentException_whenArgumentsAreNotValid(
+            int listLength, int startNumber, int endNumber) {
         //when & then:
         Assertions.assertThatThrownBy(() -> generator.generateRandomRoutePoints(listLength, startNumber, endNumber))
                 .isInstanceOf(IllegalArgumentException.class);

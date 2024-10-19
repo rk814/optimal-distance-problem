@@ -25,7 +25,7 @@ class RouteVariantsTest {
 
 
     @Test
-    void routeVariants_shouldCreateClassInstance() {
+    void routeVariants_shouldCreateClassInstance_whenArgumentsAreValid() {
         //given
         int min = 1;
         int max = 5;
@@ -46,7 +46,7 @@ class RouteVariantsTest {
     }
 
     @Test
-    void calculate_shouldCalculateAndSortRoutes_whenRoutesReturn() {
+    void calculate_shouldCalculateAndSortRoutes_whenRoutesMatchArguments() {
         //given:
         List<Integer> availablePoints = List.of(0, 15, 20, 25, 40);
         RouteVariants routeVariants = new RouteVariants(calculator, 15, 25);
@@ -73,7 +73,7 @@ class RouteVariantsTest {
     }
 
     @Test
-    void calculate_shouldSetEmptyList_whenNoRoutesReturn() {
+    void calculate_shouldSetEmptyList_whenNoRoutesMatchArguments() {
         //given:
         List<Integer> availablePoints = List.of(0, 15, 20, 25, 40);
         RouteVariants routeVariants = new RouteVariants(calculator, 1, 5);
@@ -92,7 +92,7 @@ class RouteVariantsTest {
     }
 
     @Test
-    void calculate_shouldReturnNullPointerException() {
+    void calculate_shouldReturnNullPointerException_whenRequiredFieldsWereNotSetUpCorrectly() {
         //given:
         RouteVariants routeVariants = new RouteVariants(calculator);
 
@@ -102,7 +102,7 @@ class RouteVariantsTest {
     }
 
     @Test
-    void getBestRoute_shouldReturnBestRoute() throws NoSuchFieldException, IllegalAccessException {
+    void getBestRoute_shouldReturnBestRoute_whenRoutesArePresentAndCalculated() throws NoSuchFieldException, IllegalAccessException {
         //given:
         RouteVariants routeVariants = new RouteVariants(calculator);
         Class<?> routeVariantsClass = routeVariants.getClass();
@@ -125,7 +125,7 @@ class RouteVariantsTest {
     }
 
     @Test
-    void getBestRoute_shouldThrowNoSuchElementException() throws NoSuchFieldException, IllegalAccessException {
+    void getBestRoute_shouldThrowNoSuchElementException_whenRoutesAreNotPresent() throws NoSuchFieldException, IllegalAccessException {
         //given:
         RouteVariants routeVariants = new RouteVariants(calculator);
         Class<?> routeVariantsClass = routeVariants.getClass();
@@ -140,7 +140,7 @@ class RouteVariantsTest {
     }
 
     @Test
-    void getCalculatedStageRoutes_shouldReturnStageRoutesList() throws NoSuchFieldException, IllegalAccessException {
+    void getCalculatedStageRoutes_shouldReturnStageRoutesList_whenRoutesArePresent() throws NoSuchFieldException, IllegalAccessException {
         //given:
         RouteVariants routeVariants = new RouteVariants(calculator);
         Class<?> routeVariantsClass = routeVariants.getClass();
@@ -163,7 +163,7 @@ class RouteVariantsTest {
     }
 
     @Test
-    void getCalculatedStageRoutes_shouldThrowNullPointerException() {
+    void getCalculatedStageRoutes_shouldThrowNullPointerException_whenRoutesAreNotCalculated() {
         //given:
         RouteVariants routeVariants = new RouteVariants(calculator);
 
@@ -173,7 +173,7 @@ class RouteVariantsTest {
     }
 
     @Test
-    void toString_shouldReturnProperInstanceMessage() throws NoSuchFieldException, IllegalAccessException {
+    void toString_shouldReturnProperInstanceMessage_whenCalculationsWerePerformed() throws NoSuchFieldException, IllegalAccessException {
         //given:
         RouteVariants routeVariants = new RouteVariants(calculator);
         Class<?> routeVariantsClass = routeVariants.getClass();
@@ -197,7 +197,7 @@ class RouteVariantsTest {
     }
 
     @Test
-    void toString_shouldReturnCalculationsNotStartedJetMessage() {
+    void toString_shouldReturnCalculationsNotStartedJetMessage_whenCalculationsWereNotPerformed() {
         //given:
         RouteVariants routeVariants = new RouteVariants(calculator);
 

@@ -10,7 +10,7 @@ import java.util.List;
 class RouteVariantsValidatorTest {
 
     @Test
-    void validateDistances_shouldNotThrowAnyException() {
+    void validateDistances_shouldNotThrowAnyException_whenArgumentsAreProper() {
         //given:
         int min = 5;
         int max = 10;
@@ -22,7 +22,7 @@ class RouteVariantsValidatorTest {
     }
 
     @Test
-    void validateDistances_shouldThrowIllegalArgumentException_whenMinOrMaxIsLowerThen1() {
+    void validateDistances_shouldThrowIllegalArgumentException_whenMinOrMaxIsLowerThenOne() {
         //given:
         int min = 0;
         int max = 10;
@@ -48,7 +48,7 @@ class RouteVariantsValidatorTest {
     }
 
     @Test
-    void validateAvailablePoints_shouldNotThrowAnyException() {
+    void validateAvailablePoints_shouldNotThrowAnyException_whenArgumentsAreProper() {
         //given:
         List<Integer> points = List.of(23, 45, 67);
         RouteVariantsValidator validator = new RouteVariantsValidator();
@@ -71,7 +71,7 @@ class RouteVariantsValidatorTest {
     }
 
     @Test
-    void validateAvailablePoints_shouldThrowIllegalArgumentException_whenThereAreAnyPointsLowerThan0() {
+    void validateAvailablePoints_shouldThrowIllegalArgumentException_whenThereAreAnyPointsLowerThanZero() {
         //given:
         List<Integer> points = List.of(-4, 0, 23, 45);
         RouteVariantsValidator validator = new RouteVariantsValidator();

@@ -48,7 +48,7 @@ abstract class CommonRoutesCalculatorTest {
 
     @ParameterizedTest
     @MethodSource("provideValues")
-    void calculateRoutes_shouldReturnProperStageRoutes(
+    void calculateRoutes_shouldReturnStageRoutes_whenValidData(
             List<Integer> availablePoints, int min, int max, List<List<Integer>> result) {
 
         // given:
@@ -80,7 +80,7 @@ abstract class CommonRoutesCalculatorTest {
 
     @ParameterizedTest
     @MethodSource("provideValuesReturningEmptyList")
-    void calculateRoutes_shouldReturnEmptyList_whenThereIsNoAvailableRoutesForEntryData(
+    void calculateRoutes_shouldReturnEmptyList_whenNoRoutesMatchArguments(
             List<Integer> availablePoints, int min, int max) {
         // given:
         DistanceBoundaries distanceBoundaries = new DistanceBoundaries(min, max);

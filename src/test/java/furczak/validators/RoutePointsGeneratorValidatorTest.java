@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class RoutePointsGeneratorValidatorTest {
 
     @Test
-    void endPointValidator_shouldThrowIllegalArgumentException_whenStartPointIsLessThan0() {
+    void endPointValidator_shouldThrowIllegalArgumentException_whenStartPointIsLessThanZero() {
         //given:
         RoutePointsGeneratorValidator generator = new RoutePointsGeneratorValidator();
         int start = -1;
@@ -21,7 +21,7 @@ class RoutePointsGeneratorValidatorTest {
     }
 
     @Test
-    void endPointValidator_shouldThrowIllegalArgumentException_whenEndPointIsLessThen2() {
+    void endPointValidator_shouldThrowIllegalArgumentException_whenEndPointIsLessThenTwo() {
         //given:
         RoutePointsGeneratorValidator generator = new RoutePointsGeneratorValidator();
         int start = 0;
@@ -40,7 +40,7 @@ class RoutePointsGeneratorValidatorTest {
             "4,4",
             "3,4",
     })
-    void endPointValidator_shouldThrowIllegalArgumentException_whenEndPointIsNotGreaterThanStartPointBy2(int start, int end) {
+    void endPointValidator_shouldThrowIllegalArgumentException_whenEndPointIsNotGreaterThanStartPointByTwo(int start, int end) {
         //given:
         RoutePointsGeneratorValidator generator = new RoutePointsGeneratorValidator();
 
@@ -56,7 +56,7 @@ class RoutePointsGeneratorValidatorTest {
             "3,5",
             "10,104"
     })
-    void endPointValidator_shouldNotThrowAnyException(int start, int end) {
+    void endPointValidator_shouldNotThrowAnyException_whenArgumentsAreProper(int start, int end) {
         //given:
         RoutePointsGeneratorValidator generator = new RoutePointsGeneratorValidator();
 

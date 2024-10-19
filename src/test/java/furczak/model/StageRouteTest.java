@@ -5,22 +5,36 @@ import org.assertj.core.api.Assertions;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Stream;
 
 import static org.instancio.Select.field;
 
 
 class StageRouteTest {
 
-    @Test
-    void calculate_shouldCalculateRouteDistancesAndStandardDeviation() {
-        //given:
-        List<Integer> testRoute = List.of(0, 2, 4, 6);
+    private static Stream<Arguments> provideValues() {
+        return Stream.of(
+                Arguments.of(List.of(0, 2, 4, 6), 1, 2, 1.0, List.of(2, 2, 2)),
+                Arguments.of(List.of(0, 2), 1, 3, 0.0, List.of(2)),
+                Arguments.of(List.of(0, 20, 50, 60), 10, 30, 8.16496580927726, List.of(20, 30, 10)),
+                Arguments.of(List.of(0, 100, 102, 104), 2, 100, 49.0, List.of(100, 2, 2)),
+                Arguments.of(List.of(50, 100, 150), 50, 50, 0.0, List.of(50, 50))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideValues")
+    void calculate_shouldCalculateRouteDistancesAndStandardDeviation_whenRequiredFieldsAreProperSet(
+            List<Integer> testRoute, int min, int max, Double expectedStandardDeviation, List<Integer> expectedRouteDistances) {
+
         RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
-        int min = 1, max = 2;
         RouteVariants routeVariants = new RouteVariants(calculator, min, max);
         StageRoute testStageRoute = new StageRoute(testRoute, routeVariants);
 
@@ -29,15 +43,15 @@ class StageRouteTest {
 
         //then:
         Assertions.assertThat(testStageRoute).extracting(StageRoute::getStandardDeviation)
-                .isEqualTo(1.0);
+                .isEqualTo(expectedStandardDeviation);
         Assertions.assertThat(testStageRoute)
                 .extracting(StageRoute::getRouteDistances, InstanceOfAssertFactories.list(Integer.class))
-                .hasSize(3)
-                .isEqualTo(List.of(2, 2, 2));
+                .hasSize(expectedRouteDistances.size())
+                .isEqualTo(expectedRouteDistances);
     }
 
     @Test
-    void calculate_shouldThrowNoSuchElementException() {
+    void calculate_shouldThrowNoSuchElementException_whenRouteIsEmptyList() {
         //given:
         List<Integer> testRoute = List.of();
         RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
@@ -46,12 +60,12 @@ class StageRouteTest {
         StageRoute testStageRoute = new StageRoute(testRoute, routeVariants);
 
         //when & then:
-        Assertions.assertThatThrownBy(()-> testStageRoute.calculate())
+        Assertions.assertThatThrownBy(() -> testStageRoute.calculate())
                 .isInstanceOf(NoSuchElementException.class);
     }
 
     @Test
-    void isRouteComplete_shouldReturnTrue() throws NoSuchFieldException, IllegalAccessException {
+    void isRouteComplete_shouldReturnTrue_whenRouteLastPointMatchAvailablePointsLastPoint() throws NoSuchFieldException, IllegalAccessException {
         //given:
         List<Integer> testRoute = List.of(0, 1, 2, 3);
         RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
@@ -72,7 +86,7 @@ class StageRouteTest {
     }
 
     @Test
-    void isRouteComplete_shouldReturnFalse() throws NoSuchFieldException, IllegalAccessException {
+    void isRouteComplete_shouldReturnFalse_whenRouteLastPointNotMatchAvailablePointsLastPoint() throws NoSuchFieldException, IllegalAccessException {
         //given:
         List<Integer> testRoute = List.of(0, 1, 2, 3);
         RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
@@ -93,7 +107,7 @@ class StageRouteTest {
     }
 
     @Test
-    void compareTo_shouldReturn1() {
+    void compareTo_shouldReturnOne_whenFirstStageRouteIsBiggerThenSecond() {
         //given:
         StageRoute stageRoute1 = Instancio.of(StageRoute.class)
                 .set(field("standardDeviation"), 1.2)
@@ -110,7 +124,7 @@ class StageRouteTest {
     }
 
     @Test
-    void compareTo_shouldReturn0() {
+    void compareTo_shouldReturnZero_whenFirstStageRouteAndSecondAreEqual() {
         //given:
         StageRoute stageRoute1 = Instancio.of(StageRoute.class)
                 .set(field("standardDeviation"), 1.2)
@@ -127,7 +141,7 @@ class StageRouteTest {
     }
 
     @Test
-    void compareTo_shouldReturnMinus1() {
+    void compareTo_shouldReturnMinusOne_whenFirstStageRouteIsSmallerThenSecond() {
         //given:
         StageRoute stageRoute1 = Instancio.of(StageRoute.class)
                 .set(field("standardDeviation"), 0.8)
@@ -144,7 +158,7 @@ class StageRouteTest {
     }
 
     @Test
-    void getLastRoutePoint_shouldReturnLastPoint() {
+    void getLastRoutePoint_shouldReturnLastPoint_whenRouteListIsNotEmpty() {
         //given:
         List<Integer> testRoute = List.of(0, 1, 2, 3);
         RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
@@ -159,7 +173,7 @@ class StageRouteTest {
     }
 
     @Test
-    void getLastRoutePoint_shouldReturnMinus1() {
+    void getLastRoutePoint_shouldReturnMinusOne_whenRouteListIsEmpty() {
         //given:
         List<Integer> testRoute = List.of();
         RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
@@ -174,7 +188,7 @@ class StageRouteTest {
     }
 
     @Test
-    void toString_shouldReturnRouteIsEmptyMessage() {
+    void toString_shouldReturnRouteIsEmptyMessage_whenRouteIsEmptyList() {
         //given:
         List<Integer> testRoute = List.of();
         RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
@@ -189,9 +203,9 @@ class StageRouteTest {
     }
 
     @Test
-    void toString_shouldReturnRouteMessageWithAdvice() {
+    void toString_shouldReturnRouteMessageWithAdvice_whenRouteIsNotEmptyButCalculationsWereNotInvoked() {
         //given:
-        List<Integer> testRoute = List.of(0, 1,2,3);
+        List<Integer> testRoute = List.of(0, 1, 2, 3);
         RecurrentRoutesCalculator calculator = new RecurrentRoutesCalculator();
         RouteVariants routeVariants = new RouteVariants(calculator);
         StageRoute testStageRoute = new StageRoute(testRoute, routeVariants);
@@ -204,7 +218,7 @@ class StageRouteTest {
     }
 
     @Test
-    void toString_shouldReturnProperMessage() {
+    void toString_shouldReturnProperMessage_whenRouteIsNotEmptyAndCalculationsWereInvoked() {
         //given:
         StageRoute testStageRoute = Instancio.create(StageRoute.class);
 

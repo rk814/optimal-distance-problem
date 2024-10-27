@@ -5,7 +5,7 @@ Actually, the path of the trip wasn't the real issue; I knew where I wanted to g
 The problem started when I tried to divide it into daily stages.
 
 
-My assumption was that each day should cover a distance between 30 to 50 km, and there were certain places along the stageRoute where I could stay overnight.
+My assumption was that each day should cover a distance between 30 to 50 km, and there were certain places along the route where I could stay overnight.
 ### Day one
 I started from point A and explored every possible option.
 Let's say there were 3 accommodation options at 30 km, 40 km, and 50 km (keeping it simple for this example).
@@ -37,15 +37,34 @@ This type of problem forms a tree structure, and by iterating through all branch
 ![tree-dark.png](img%2Fpng%2Ftree-dark.png#gh-dark-mode-only)
 ![tree-light.png](img%2Fpng%2Ftree-light.png#gh-light-mode-only)
 
-It worked fine; I actually found a better solution than what I could identify manually. However, it's not the most efficient algorithm. This is an `O(2^n)` exponential algorithm, and while it worked well for my specific scale problem, during more extensive tests, it could easily overwhelm the processor. Therefore, I decided to improve it.
+It worked fine; I actually found a better solution than what I could identify manually. However, it's not the most efficient algorithm. This is an $`O(2^n)`$ exponential algorithm, and while it worked well for my specific scale problem, during more extensive tests, it could easily overwhelm the processor. Therefore, I decided to improve it.
+## **Iterator** - Second solution
+Iterator approach is very similar to the previous one. The main difference is that it doesn't use recursion but instead relies on Java's Iterator. Obviously, any recursive algorithm can also be solved in a traditional way. Typically, this should be a faster method, thought not in this case. My testing showed that recursion was approximately twice faster in any example I tried. 
+## Future plans
+### **Generic algorithm**
+In all attempt to solve this problem so far, I used a two-stage approach. First, I iterated through all possible points to generate every combination. Then, I searched for the best one among them.
 
-## **Generic algorithm** - second solution
-In my first attempt to solve this problem, I used a two-stage approach. First, I iterated through all possible points to generate every combination. Then, I searched for the best one among them.
-
-The idea behind using a genetic algorithm is to skip the first step entirely and try to find the optimal solution from the beginning.
-
-//todo - how it works
-## Third solution - **Treads**
-//todo ???
+The idea behind using a genetic algorithm is to skip the first step entirely and try to find the optimal solution directly from the beginning.
+### **Threads**
+Since this problem is kind of problem can be reduced to sub-problems, similar to divide-and-conquer algorithms, it is natural candidate to using multi-thread environment. 
 ## Requirements
 + Java 17 or higher
++ Maven 3.9.9 (or higher) or an IDE with build-in Maven support
+### Starting app locally
+Argument setup can be configured in the Main class.  
+The app can be run with a proper IDE or with Maven by running:
+
+`mvn clean package`  
+
+and  
+
+`java -cp target/optimal-distance-problem-1.0-SNAPSHOT-with-dependencies.jar furczak.Main`  
+
+from the main directory.
+### Performing testing
+All public methods are fully tested with unit tests, including parameterized tests.  
+Test can be performed by:
+
+`mvn clean test`
+
+The tests are written in AssertJ, with support from Mockito and Instancio.

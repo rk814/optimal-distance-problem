@@ -1,5 +1,0 @@
-1. calculator with iterator
-2. speed measure
-3. tests + logs
-4. calculations with GENETIC ALGORITHM
-5. readme

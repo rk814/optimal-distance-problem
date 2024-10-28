@@ -1,5 +1,6 @@
 package furczak;
 
+import furczak.calculators.CalculatorFactory;
 import furczak.calculators.bruteforce.IteratorRoutesCalculator;
 import furczak.calculators.bruteforce.RecurrentRoutesCalculator;
 import furczak.generators.RoutePointsGenerator;
@@ -9,6 +10,9 @@ import furczak.model.RouteVariants;
 import java.util.List;
 
 public class Main {
+
+    private static final CalculatorFactory factory = new CalculatorFactory();
+
     public static void main(String[] args) {
 
         // sample setup
@@ -21,7 +25,7 @@ public class Main {
         // calculator setup
         int minDistance = 22;
         int maxDistance = 44;
-        var calculator = new RecurrentRoutesCalculator();
+        var calculator = factory.getCalculator("iterator"); // iterator or recurrent
 
 
         RoutePointsGenerator generator = new RoutePointsGenerator();

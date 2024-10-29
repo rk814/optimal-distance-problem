@@ -1,11 +1,11 @@
 package furczak;
 
 import furczak.calculators.CalculatorFactory;
-import furczak.calculators.bruteforce.IteratorRoutesCalculator;
-import furczak.calculators.bruteforce.RecurrentRoutesCalculator;
 import furczak.generators.RoutePointsGenerator;
-import furczak.model.StageRoute;
 import furczak.model.RouteVariants;
+import furczak.model.StageRoute;
+import furczak.options.OptionsHandler;
+import org.apache.commons.cli.ParseException;
 
 import java.util.List;
 
@@ -13,19 +13,21 @@ public class Main {
 
     private static final CalculatorFactory factory = new CalculatorFactory();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
+
+        OptionsHandler options = new OptionsHandler(args);
 
         // sample setup
-        int sampleNumber = 1;
-        boolean generate = false;
-        int numerOfPoints = 50;
-        int startPoint = 0;
-        int endPoint = 400;
+        int sampleNumber = options.getSampleNumber();
+        boolean generate = options.getIsGenerated();
+        int numerOfPoints = options.getNumberOfPints();
+        int startPoint = options.getStartPoint();
+        int endPoint = options.getEndPoint();
 
         // calculator setup
-        int minDistance = 22;
-        int maxDistance = 44;
-        var calculator = factory.getCalculator("iterator"); // iterator or recurrent
+        int minDistance = options.getMinDistance();
+        int maxDistance = options.getMaxDistance();
+        var calculator = factory.getCalculator(options.getCalculator()); // iterator or recurrent
 
 
         RoutePointsGenerator generator = new RoutePointsGenerator();

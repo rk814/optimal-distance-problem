@@ -3,11 +3,13 @@ package furczak.options;
 import lombok.Getter;
 import org.apache.commons.cli.*;
 
+import java.util.Arrays;
+
 
 @Getter
 public class OptionsHandler {
 
-    private final int DEFAULT_SAMPLE_NUMBER = 2;
+    private final int DEFAULT_SAMPLE_NUMBER = 1;
     private final boolean DEFAULT_IS_GENERATED = false;
     private final int DEFAULT_NUMBER_OF_POINTS = 10;
     private final int DEFAULT_START_POINT = 0;
@@ -27,6 +29,7 @@ public class OptionsHandler {
 
     public OptionsHandler(String[] args) throws ParseException {
         this.args = args;
+        Arrays.stream(args).forEach(System.out::println);
         Options options = setupOptions();
         readArgs(options);
     }
@@ -51,7 +54,7 @@ public class OptionsHandler {
                 .required()
                 .type(Integer.class)
                 .desc("the maximum allowable distance (in days) for route calculations").build();
-        Option sample = Option.builder("n")
+        Option sample = Option.builder("ns")
                 .longOpt("sample")
                 .hasArg()
                 .argName("int")
@@ -60,22 +63,24 @@ public class OptionsHandler {
                 .build();
         Option gen = Option.builder("g")
                 .longOpt("gen")
-                .type(Boolean.class)
                 .desc("generate sample values").build();
         Option points = Option.builder("p")
                 .longOpt("points")
                 .hasArg()
                 .argName("int")
+                .type(Integer.class)
                 .build();
         Option start = Option.builder("s")
                 .longOpt("start")
                 .hasArg()
                 .argName("int")
+                .type(Integer.class)
                 .build();
         Option end = Option.builder("e")
                 .longOpt("end")
                 .hasArg()
                 .argName("int")
+                .type(Integer.class)
                 .build();
 
         options.addOption(calc);
@@ -97,8 +102,8 @@ public class OptionsHandler {
             this.calculator = cmd.getOptionValue("c");
             this.minDistance = cmd.getParsedOptionValue("m");
             this.maxDistance = cmd.getParsedOptionValue("x");
-            this.sampleNumber = cmd.getParsedOptionValue("n", DEFAULT_SAMPLE_NUMBER);
-            this.isGenerated = cmd.getParsedOptionValue("g", DEFAULT_IS_GENERATED);
+            this.sampleNumber = cmd.getParsedOptionValue("ns", DEFAULT_SAMPLE_NUMBER);
+            this.isGenerated = cmd.hasOption("g") ? true : DEFAULT_IS_GENERATED;
             this.numberOfPints = cmd.getParsedOptionValue("p", DEFAULT_NUMBER_OF_POINTS);
             this.startPoint = cmd.getParsedOptionValue("s", DEFAULT_START_POINT);
             this.endPoint = cmd.getParsedOptionValue("e", DEFAULT_END_POINT);

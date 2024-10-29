@@ -77,7 +77,7 @@ public class RouteVariants implements BestRouteFinder {
     @Override
     public StageRoute getBestRoute() {
         return calculatedStageRoutes.stream().min(StageRoute::compareTo)
-                .orElseThrow(() -> new NoSuchElementException("Empty stage route list"));
+                .orElseThrow(() -> new NoSuchElementException("Empty stage route list for best route calculations"));
     }
 
     public List<StageRoute> getCalculatedStageRoutes() {

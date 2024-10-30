@@ -37,7 +37,7 @@ public class OptionsHandler {
     private Options setupOptions() {
         Options options = new Options();
         Option calc = new Option("c", "calc", true,
-                "calculator variant; currently 'iterator' or 'recurrent'");
+                "calculator type; currently 'iterator' or 'recurrent'");
         calc.setRequired(true);
         Option min = Option.builder("m")
                 .longOpt("min")
@@ -68,18 +68,25 @@ public class OptionsHandler {
                 .hasArg()
                 .argName("int")
                 .type(Integer.class)
+                .desc("the number of random intermediate points to generate between the start point and end point")
                 .build();
         Option start = Option.builder("s")
                 .longOpt("start")
                 .hasArg()
                 .argName("int")
                 .type(Integer.class)
+                .desc("the departure point, which must be equal or greater than 0")
                 .build();
         Option end = Option.builder("e")
                 .longOpt("end")
                 .hasArg()
                 .argName("int")
                 .type(Integer.class)
+                .desc("the destination point, which must be equal or greater than 2 and also greater than start point")
+                .build();
+        Option help = Option.builder("h")
+                .longOpt("help")
+                .desc("this help")
                 .build();
 
         options.addOption(calc);
@@ -90,6 +97,7 @@ public class OptionsHandler {
         options.addOption(points);
         options.addOption(start);
         options.addOption(end);
+        options.addOption(help);
 
         return options;
     }
@@ -106,6 +114,11 @@ public class OptionsHandler {
             this.numberOfPoints = cmd.getParsedOptionValue("p", DEFAULT_NUMBER_OF_POINTS);
             this.startPoint = cmd.getParsedOptionValue("s", DEFAULT_START_POINT);
             this.endPoint = cmd.getParsedOptionValue("e", DEFAULT_END_POINT);
+
+            if (cmd.hasOption("h")) {
+                HelpFormatter formatter = new HelpFormatter();
+                formatter.printHelp("odp", options, true);
+            }
         } catch (ParseException e) {
             throw new ParseException("Parsing failed. Reason: " + e.getMessage());
         }

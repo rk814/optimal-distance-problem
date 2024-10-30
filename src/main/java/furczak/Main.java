@@ -20,7 +20,7 @@ public class Main {
         // sample setup
         int sampleNumber = options.getSampleNumber();
         boolean generate = options.getIsGenerated();
-        int numerOfPoints = options.getNumberOfPints();
+        int numerOfPoints = options.getNumberOfPoints();
         int startPoint = options.getStartPoint();
         int endPoint = options.getEndPoint();
 

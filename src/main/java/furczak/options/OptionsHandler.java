@@ -22,14 +22,13 @@ public class OptionsHandler {
     private Integer maxDistance;
     private Integer sampleNumber;
     private Boolean isGenerated;
-    private Integer numberOfPints;
+    private Integer numberOfPoints;
     private Integer startPoint;
     private Integer endPoint;
 
 
     public OptionsHandler(String[] args) throws ParseException {
         this.args = args;
-        Arrays.stream(args).forEach(System.out::println);
         Options options = setupOptions();
         readArgs(options);
     }
@@ -104,7 +103,7 @@ public class OptionsHandler {
             this.maxDistance = cmd.getParsedOptionValue("x");
             this.sampleNumber = cmd.getParsedOptionValue("ns", DEFAULT_SAMPLE_NUMBER);
             this.isGenerated = cmd.hasOption("g") ? true : DEFAULT_IS_GENERATED;
-            this.numberOfPints = cmd.getParsedOptionValue("p", DEFAULT_NUMBER_OF_POINTS);
+            this.numberOfPoints = cmd.getParsedOptionValue("p", DEFAULT_NUMBER_OF_POINTS);
             this.startPoint = cmd.getParsedOptionValue("s", DEFAULT_START_POINT);
             this.endPoint = cmd.getParsedOptionValue("e", DEFAULT_END_POINT);
         } catch (ParseException e) {

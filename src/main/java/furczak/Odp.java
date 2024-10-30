@@ -9,7 +9,7 @@ import org.apache.commons.cli.ParseException;
 
 import java.util.List;
 
-public class Main {
+public class Odp {
 
     private static final CalculatorFactory factory = new CalculatorFactory();
 

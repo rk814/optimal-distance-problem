@@ -1,41 +1,29 @@
 package furczak;
 
 import furczak.calculators.CalculatorFactory;
-import furczak.generators.RoutePointsGenerator;
 import furczak.model.RouteVariants;
 import furczak.model.StageRoute;
-import furczak.options.OptionsHandler;
+import furczak.options.SolutionOptionsHandler;
 import org.apache.commons.cli.ParseException;
 
 import java.util.List;
 
-public class Odp {
+public class Solution {
 
     private static final CalculatorFactory factory = new CalculatorFactory();
 
     public static void main(String[] args) throws ParseException {
 
-        OptionsHandler options = new OptionsHandler(args);
+        SolutionOptionsHandler options = new SolutionOptionsHandler(args);
 
-        // sample setup
-        int sampleNumber = options.getSampleNumber();
-        boolean generate = options.getIsGenerated();
-        int numerOfPoints = options.getNumberOfPoints();
-        int startPoint = options.getStartPoint();
-        int endPoint = options.getEndPoint();
-
-        // calculator setup
+        // setup
         int minDistance = options.getMinDistance();
         int maxDistance = options.getMaxDistance();
+        String sampleName =  options.getSampleName();
         var calculator = factory.getCalculator(options.getCalculator()); // iterator or recurrent
 
-
-        RoutePointsGenerator generator = new RoutePointsGenerator();
-        List<Integer> availablePoints = generator.getSampleRoutePoints(sampleNumber);
-        if (generate) {
-            availablePoints = generator.generateRandomRoutePoints(numerOfPoints, startPoint, endPoint);
-        }
-        System.out.printf("Points list: %s%n", availablePoints);
+        // todo load points
+        List<Integer> availablePoints = null;
 
         RouteVariants simpleRouteVariants = new RouteVariants(calculator, minDistance, maxDistance);
         simpleRouteVariants.setAvailablePoints(availablePoints);

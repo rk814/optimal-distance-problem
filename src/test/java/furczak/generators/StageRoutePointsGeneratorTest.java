@@ -1,75 +1,15 @@
 package furczak.generators;
 
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.InstanceOfAssertFactories;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.stream.Stream;
 
 
 class StageRoutePointsGeneratorTest {
 
     private final RoutePointsGenerator generator = new RoutePointsGenerator();
 
-    @Test
-    void getSampleRoutePoints_shouldReturnRequestPointList_whenKeyIsValid() {
-        //given:
-        int key = 1;
-        List<Integer> sampleList = generator.getSampleLists().get(key);
-        int listSize = sampleList.size();
-
-        //when:
-        List<Integer> actual = generator.getSampleRoutePoints(key);
-
-        //then:
-        Assertions.assertThat(actual)
-                .isNotEmpty()
-                .hasSize(listSize)
-                .isEqualTo(sampleList);
-    }
-
-    @Test
-    void getSampleRoutePoints_shouldThrowNoSuchElementException_whenKeyIsNotValid() {
-        //given:
-        int key = 0;
-        List<Integer> sampleList = generator.getSampleLists().get(key);
-
-        //when&than:
-        Assertions.assertThatThrownBy(() -> generator.getSampleRoutePoints(key))
-                .isInstanceOf(NoSuchElementException.class);
-    }
-
-    @ParameterizedTest
-    @CsvSource({
-            "111,'0,23,44,57'",
-            "112,'0,2,4,6'",
-            "113,'100,105'",
-            "111,''",
-    })
-    void addSampleRoutPoints_shouldAddNewList_whenListNotEmptyOrEmptyProvided(
-            int key, String routePointsList
-    ) {
-        //given:
-        List<Integer> routePoints = routePointsList.isBlank() ? new ArrayList<>()
-                : Stream.of(routePointsList.split(",")).map(Integer::parseInt).toList();
-
-        //when:
-        generator.addSampleRoutPoints(key, routePoints);
-        Map<Integer, List<Integer>> actual = generator.getSampleLists();
-
-        //then:
-        Assertions.assertThat(actual)
-                .containsKey(key)
-                .extractingByKey(key, InstanceOfAssertFactories.list(Integer.class))
-                .hasSize(routePoints.size())
-                .containsExactlyElementsOf(routePoints);
-    }
 
     @ParameterizedTest
     @CsvSource({

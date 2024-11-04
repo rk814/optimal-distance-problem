@@ -58,7 +58,7 @@ The app can be run with a proper IDE or with Maven by running:
 
 and  
 
-`java -cp target/optimal-distance-problem-1.0-SNAPSHOT-with-dependencies.jar furczak.Odp`  
+`java -cp target/optimal-distance-problem-1.0-SNAPSHOT-with-dependencies.jar furczak.Solution`  
 
 from the main directory.
 ### Performing testing

@@ -33,7 +33,7 @@ public class DataManager {
     }
 
     public void saveData(List<Integer> data, String fileName) {
-        if (!dataValidator.isFileNameValid(fileName) || data == null) {
+        if (!dataValidator.isFileNameValid(fileName) || dataValidator.isNull(data)) {
             throw new RuntimeException("Saving failed. Reason: Invalid file name or null data");
         }
 

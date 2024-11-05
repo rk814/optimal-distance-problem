@@ -11,6 +11,7 @@ public class Generator {
 
     public static void main(String[] args) throws ParseException {
         GeneratorOptionsHandler options = new GeneratorOptionsHandler(args);
+        if (!options.areAllOptionsPresent()) return;
 
         // setup
         String sampleName = options.getSampleName();

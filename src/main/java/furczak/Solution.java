@@ -16,11 +16,12 @@ public class Solution {
     public static void main(String[] args) throws ParseException {
 
         SolutionOptionsHandler options = new SolutionOptionsHandler(args);
+        if (!options.areAllOptionsPresent()) return;
 
         // setup
         int minDistance = options.getMinDistance();
         int maxDistance = options.getMaxDistance();
-        String sampleName =  options.getSampleName();
+        String sampleName = options.getSampleName();
         var calculator = factory.getCalculator(options.getCalculator()); // iterator or recurrent
 
         DataManager dataManager = new DataManager();
@@ -40,4 +41,5 @@ public class Solution {
         StageRoute bestSimpleStageRoute = simpleRouteVariants.getBestRoute();
         System.out.printf("Best route %s%n", bestSimpleStageRoute);
     }
+
 }

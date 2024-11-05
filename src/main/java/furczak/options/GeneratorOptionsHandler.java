@@ -33,7 +33,6 @@ public class GeneratorOptionsHandler {
                 .longOpt("points")
                 .hasArg()
                 .argName("int")
-                .required()
                 .type(Integer.class)
                 .desc("the number of random intermediate points to generate between the start point and end point")
                 .build();
@@ -41,7 +40,6 @@ public class GeneratorOptionsHandler {
                 .longOpt("start")
                 .hasArg()
                 .argName("int")
-                .required()
                 .type(Integer.class)
                 .desc("the departure point, which must be equal or greater than 0")
                 .build();
@@ -49,7 +47,6 @@ public class GeneratorOptionsHandler {
                 .longOpt("end")
                 .hasArg()
                 .argName("int")
-                .required()
                 .type(Integer.class)
                 .desc("the destination point, which must be equal or greater than 2 and also greater than start point")
                 .build();
@@ -73,21 +70,38 @@ public class GeneratorOptionsHandler {
         return options;
     }
 
+    public boolean areAllOptionsPresent() {
+        return getNumberOfPoints() != null && getStartPoint() != null && getEndPoint() != null;
+    }
+
     private void readArgs(Options options) throws ParseException {
         CommandLineParser parser = new DefaultParser();
         try {
             CommandLine cmd = parser.parse(options, args);
+            if (cmd.hasOption("h")) {
+                HelpFormatter formatter = new HelpFormatter();
+                formatter.printHelp("generator", options, true);
+                return;
+            }
+            areRequiredArgsPresent(cmd);
             this.numberOfPoints = cmd.getParsedOptionValue("p", DEFAULT_NUMBER_OF_POINTS);
             this.startPoint = cmd.getParsedOptionValue("s", DEFAULT_START_POINT);
             this.endPoint = cmd.getParsedOptionValue("e", DEFAULT_END_POINT);
             this.sampleName = cmd.getOptionValue("sn", DEFAULT_SAMPLE_NAME);
-
-            if (cmd.hasOption("h")) {
-                HelpFormatter formatter = new HelpFormatter();
-                formatter.printHelp("generator", options, true);
-            }
         } catch (ParseException e) {
             throw new ParseException("Parsing failed. Reason: " + e.getMessage());
+        }
+    }
+
+    private void areRequiredArgsPresent(CommandLine cmd) throws ParseException {
+        if (!cmd.hasOption("p")) {
+            throw new ParseException("points argument is required (-h for help)");
+        }
+        if (!cmd.hasOption("s")) {
+            throw new ParseException("start argument is required (-h for help)");
+        }
+        if (!cmd.hasOption("e")) {
+            throw new ParseException("end argument is required (-h for help)");
         }
     }
 }

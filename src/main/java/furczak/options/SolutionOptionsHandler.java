@@ -18,7 +18,6 @@ public class SolutionOptionsHandler {
     private String sampleName;
 
 
-
     public SolutionOptionsHandler(String[] args) throws ParseException {
         this.args = args;
         Options options = setupOptions();
@@ -29,22 +28,19 @@ public class SolutionOptionsHandler {
     private Options setupOptions() {
         Options options = new Options();
         Option calc = new Option("c", "calc", true,
-                "calculator type; currently 'iterator' or 'recurrent'");
-        calc.setRequired(true);
+                "calculator type; currently 'iterator' or 'recurrent' (required)");
         Option min = Option.builder("m")
                 .longOpt("min")
                 .hasArg()
                 .argName("int")
-                .required()
                 .type(Integer.class)
-                .desc("the minimum allowable distance (in days) for route calculations").build();
+                .desc("the minimum allowable distance (in days) for route calculations (required)").build();
         Option max = Option.builder("x")
                 .longOpt("max")
                 .hasArg()
                 .argName("int")
-                .required()
                 .type(Integer.class)
-                .desc("the maximum allowable distance (in days) for route calculations").build();
+                .desc("the maximum allowable distance (in days) for route calculations (required)").build();
         Option sample = Option.builder("sn")
                 .longOpt("sample")
                 .hasArg()
@@ -65,21 +61,39 @@ public class SolutionOptionsHandler {
         return options;
     }
 
+    public boolean areAllOptionsPresent() {
+        return getMinDistance() != null && getMaxDistance() != null && getCalculator() != null && getSampleName() != null;
+    }
+
     private void readArgs(Options options) throws ParseException {
         CommandLineParser parser = new DefaultParser();
         try {
             CommandLine cmd = parser.parse(options, args);
+            if (cmd.hasOption("h")) {
+                HelpFormatter formatter = new HelpFormatter();
+                formatter.printHelp("optimal-distance-problem", options, true);
+                return;
+            }
+            areRequiredArgsPresent(cmd);
             this.calculator = cmd.getOptionValue("c");
             this.minDistance = cmd.getParsedOptionValue("m");
             this.maxDistance = cmd.getParsedOptionValue("x");
             this.sampleName = cmd.getOptionValue("sn", DEFAULT_SAMPLE_NAME);
 
-            if (cmd.hasOption("h")) {
-                HelpFormatter formatter = new HelpFormatter();
-                formatter.printHelp("odp", options, true);
-            }
         } catch (ParseException e) {
             throw new ParseException("Parsing failed. Reason: " + e.getMessage());
+        }
+    }
+
+    private void areRequiredArgsPresent(CommandLine cmd) throws ParseException {
+        if (!cmd.hasOption("c")) {
+            throw new ParseException("calc argument is required (-h for help)");
+        }
+        if (!cmd.hasOption("m")) {
+            throw new ParseException("min argument is required (-h for help)");
+        }
+        if (!cmd.hasOption("x")) {
+            throw new ParseException("max argument is required (-h for help)");
         }
     }
 }

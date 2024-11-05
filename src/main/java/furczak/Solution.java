@@ -1,6 +1,7 @@
 package furczak;
 
 import furczak.calculators.CalculatorFactory;
+import furczak.io.DataManager;
 import furczak.model.RouteVariants;
 import furczak.model.StageRoute;
 import furczak.options.SolutionOptionsHandler;
@@ -22,8 +23,8 @@ public class Solution {
         String sampleName =  options.getSampleName();
         var calculator = factory.getCalculator(options.getCalculator()); // iterator or recurrent
 
-        // todo load points
-        List<Integer> availablePoints = null;
+        DataManager dataManager = new DataManager();
+        List<Integer> availablePoints = dataManager.loadData(sampleName);
 
         RouteVariants simpleRouteVariants = new RouteVariants(calculator, minDistance, maxDistance);
         simpleRouteVariants.setAvailablePoints(availablePoints);

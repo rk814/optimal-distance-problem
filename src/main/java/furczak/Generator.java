@@ -1,6 +1,7 @@
 package furczak;
 
 import furczak.generators.RoutePointsGenerator;
+import furczak.io.DataManager;
 import furczak.options.GeneratorOptionsHandler;
 import org.apache.commons.cli.ParseException;
 
@@ -21,6 +22,7 @@ public class Generator {
         List<Integer> availablePoints = generator.generateRandomRoutePoints(numerOfPoints, startPoint, endPoint);
         System.out.printf("Points list: %s%n", availablePoints);
 
-        //todo save with sampleName
+        DataManager dataManager = new DataManager();
+        dataManager.saveData(availablePoints, sampleName);
     }
 }

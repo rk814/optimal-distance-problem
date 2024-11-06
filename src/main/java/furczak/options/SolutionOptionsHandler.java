@@ -28,28 +28,29 @@ public class SolutionOptionsHandler {
     private Options setupOptions() {
         Options options = new Options();
         Option calc = new Option("c", "calc", true,
-                "calculator type; currently 'iterator' or 'recurrent' (required)");
+                "Specifies the calculator type, either 'iterator' or 'recurrent' (required).");
+        calc.setArgName("type");
         Option min = Option.builder("m")
                 .longOpt("min")
                 .hasArg()
                 .argName("int")
                 .type(Integer.class)
-                .desc("the minimum allowable distance (in days) for route calculations (required)").build();
+                .desc("Sets the minimum allowable distance (in days) for route calculations (required).").build();
         Option max = Option.builder("x")
                 .longOpt("max")
                 .hasArg()
                 .argName("int")
                 .type(Integer.class)
-                .desc("the maximum allowable distance (in days) for route calculations (required)").build();
+                .desc("Sets the maximum allowable distance (in days) for route calculations (required).").build();
         Option sample = Option.builder("sn")
                 .longOpt("sample")
                 .hasArg()
-                .argName("string")
-                .desc("file containing sample points for route calculations")
+                .argName("file")
+                .desc("Specifies the file containing sample points for route calculations.")
                 .build();
         Option help = Option.builder("h")
                 .longOpt("help")
-                .desc("this help")
+                .desc("Display this help message.")
                 .build();
 
         options.addOption(calc);

@@ -34,31 +34,31 @@ public class GeneratorOptionsHandler {
                 .hasArg()
                 .argName("int")
                 .type(Integer.class)
-                .desc("the number of random intermediate points to generate between the start point and end point")
+                .desc("Specifies the number of random intermediate points to generate between the start and end points.")
                 .build();
         Option start = Option.builder("s")
                 .longOpt("start")
                 .hasArg()
                 .argName("int")
                 .type(Integer.class)
-                .desc("the departure point, which must be equal or greater than 0")
+                .desc("Sets the departure point, which must be at least 0.")
                 .build();
         Option end = Option.builder("e")
                 .longOpt("end")
                 .hasArg()
                 .argName("int")
                 .type(Integer.class)
-                .desc("the destination point, which must be equal or greater than 2 and also greater than start point")
+                .desc("Sets the destination point, which must be at least 2 and greater than the start point.")
                 .build();
         Option sample = Option.builder("sn")
                 .longOpt("sample")
                 .hasArg()
-                .argName("string")
-                .desc("file containing sample points for route calculations")
+                .argName("file")
+                .desc("Specifies the file containing sample points for route calculations.")
                 .build();
         Option help = Option.builder("h")
                 .longOpt("help")
-                .desc("this help")
+                .desc("Display this help message.")
                 .build();
 
         options.addOption(points);

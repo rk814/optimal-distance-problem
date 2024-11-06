@@ -1,4 +1,6 @@
 # Optimal Distance Problem
+## Summary
+The application calculates all possible multi-day route variants based on given criteria and identifies the optimal one. It uses recursive and iterative algorithms and also provides a tool for generating random data.
 ## Overview
 I encountered this problem while planning a multi-day bicycle expedition. 
 Actually, the path of the trip wasn't the real issue; I knew where I wanted to go. 
@@ -58,9 +60,42 @@ The app can be run with a proper IDE or with Maven by running:
 
 and  
 
-`java -cp target/optimal-distance-problem-1.0-SNAPSHOT-with-dependencies.jar furczak.Solution`  
+```shell
+ java -jar target/optimal-distance-problem-1.0-SNAPSHOT.jar --calc recurrent --min 20 --max 60 --sample="sample2.csv"
+ ```
+from the main directory. All arguments description list can be found below: 
+```
+usage: optimal-distance-problem [-c <type>] [-h] [-m <int>] [-sn <file>] [-x <int>]
+ -c,--calc <type>      Specifies the calculator type, either 'iterator' or 'recurrent' (required).
+ -h,--help             Display this help message.
+ -m,--min <int>        Sets the minimum allowable distance (in days) for route calculations (required).
+ -sn,--sample <file>   Specifies the file containing sample points for route calculations.
+ -x,--max <int>        Sets the maximum allowable distance (in days) for route calculations (required).
+```
+### Preparing samples
+Points for route calculations are loaded from a CSV file in following format:
 
-from the main directory.
+`0, 43, 59, 64, 77, 90, 110, 115, 124, 142, 161, 183`
+
+The first and last points in this list represent the start and end points of the route, respectively. 
+Therefore, the point list must contain at least two points.
+All values in the list must be non-negative, although the starting point does not have to be zero.
+
+Alternatively, you can use the random points generator by running:
+```shell
+ java -cp target/optimal-distance-problem-1.0-SNAPSHOT.jar furczak.Generator --points 25 --start 0 --end 150 --sample="random.csv"
+ ```
+from the main directory. All arguments description list can be found below:
+
+```
+usage: generator [-e <int>] [-h] [-p <int>] [-s <int>] [-sn <file>] 
+ -e,--end <int>        Sets the destination point, which must be at least 2 and greater than the start point.
+ -h,--help             Display this help message.
+ -p,--points <int>     Specifies the number of random intermediate points to generate between the start and end points.
+ -s,--start <int>      Sets the departure point, which must be at least 0.
+ -sn,--sample <file>   Specifies the file containing sample points for route calculations.
+```
+
 ### Performing testing
 All public methods are fully tested with unit tests, including parameterized tests.  
 Test can be performed by:

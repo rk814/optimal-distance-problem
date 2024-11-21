@@ -4,6 +4,7 @@ dependency-reduced-pom.xml
 !**/src/main/**/target/
 !**/src/test/**/target/
 /img/psd/
+/future.md
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
